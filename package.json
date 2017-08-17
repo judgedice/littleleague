@@ -1,0 +1,31 @@
+{
+  "name": "pitchcounter",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "algoliasearch": "^3.24.3",
+    "foundation-sites": "^6.4.1",
+    "node-sass-chokidar": "0.0.3",
+    "react": "^15.6.1",
+    "react-addons-update": "^15.6.0",
+    "react-collapsible": "^1.5.0",
+    "react-dom": "^15.6.1",
+    "react-instantsearch": "^4.0.10",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "start": "HTTPS=true react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules/foundation-sites/scss src/ -o public/",
+    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules/foundation-sites/scss src/ -o public/ --watch --recursive",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.2.3"
+  }
+}

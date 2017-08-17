@@ -1,0 +1,130 @@
+/* FOUNDATION OVERRIDES */
+
+
+html {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 300;
+}
+h1,
+h2,
+h3 {
+font-family: 'Contrail One', cursive;
+}
+
+h4,
+h5,
+h6 {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 500;
+}
+
+p, span {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 300;
+}
+
+
+/* END FOUNDATION OVERRIDES */
+
+/* TEST CLASSES  */
+
+.BORDER {
+  border: solid 1px red;
+}
+
+/* UTILITY CLASSES */
+
+/* SET HEIGHT OF COMPONENT */
+
+.h125 {
+  max-height: 125px;
+}
+
+.noborder {
+  border: none !important;
+}
+
+/* NOT SURE WHY WE HAVE TO BE SO INSISTENT HERE...
+I READ THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
+SO THIS RULE MAY GO AWAY */
+.align-center {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+
+.addPlayerModal {
+
+      box-shadow: 3px 2px 20px 0px #666;
+    position: absolute;
+    top: 20px;
+    left: 5%;
+    padding: 20px;
+    background: white;
+}
+
+
+/* FORM STYLES */
+
+.form-floating-label {
+  position: relative;
+  
+}
+
+.form-floating-label [type='text'],
+.form-floating-label [type='password'],
+.form-floating-label [type='date'],
+.form-floating-label [type='datetime'],
+.form-floating-label [type='datetime-local'],
+.form-floating-label [type='month'],
+.form-floating-label [type='week'],
+.form-floating-label [type='email'],
+.form-floating-label [type='number'],
+.form-floating-label [type='search'],
+.form-floating-label [type='tel'],
+.form-floating-label [type='time'],
+.form-floating-label [type='url'],
+.form-floating-label [type='color'],
+.form-floating-label textarea {
+  margin-bottom: 0;
+  color: #000;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 30px 1rem 1rem 25px;
+}
+
+.form-floating-label label {
+  color: #666;
+  font-size: 18px;
+  position: absolute;
+  pointer-events: none;
+  left: 25px;
+  bottom: 0;
+  /*transition: all 0.1s;*/
+  font-weight: 300;
+}
+
+.form-floating-label textarea ~ label {
+  top: 20px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.form-floating-label input:focus ~ label,
+.form-floating-label input:disabled[value] ~ label,
+.form-floating-label.has-value input ~ label {
+  top: 0;
+  font-size: 14px;
+  color: dodgerblue;
+  font-weight: 400;
+}
+
+.form-floating-label textarea:focus ~ label,
+.form-floating-label.has-value textarea ~ label {
+  top: 0;
+  font-size: 14px;
+  color: dodgerblue;
+  font-weight: 400;
+}
+

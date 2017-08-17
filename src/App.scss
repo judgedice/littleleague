@@ -1,0 +1,215 @@
+@import 'settings';
+@import 'foundation.scss';
+ 
+
+@include foundation-global-styles;
+@include foundation-xy-grid-classes;
+//@include foundation-grid;
+//@include foundation-flex-grid;
+// @include foundation-flex-classes;
+@include foundation-typography;
+@include foundation-forms;
+@include foundation-button;
+@include foundation-accordion;
+@include foundation-accordion-menu;
+@include foundation-badge;
+@include foundation-breadcrumbs;
+@include foundation-button-group;
+@include foundation-callout;
+@include foundation-card;
+@include foundation-close-button;
+@include foundation-menu;
+@include foundation-menu-icon;
+@include foundation-drilldown-menu;
+@include foundation-dropdown;
+@include foundation-dropdown-menu;
+@include foundation-responsive-embed;
+@include foundation-label;
+@include foundation-media-object;
+@include foundation-off-canvas;
+@include foundation-orbit;
+@include foundation-pagination;
+@include foundation-progress-bar;
+@include foundation-slider;
+@include foundation-sticky;
+@include foundation-reveal;
+@include foundation-switch;
+@include foundation-table;
+@include foundation-tabs;
+@include foundation-thumbnail;
+@include foundation-title-bar;
+@include foundation-tooltip;
+@include foundation-top-bar;
+@include foundation-visibility-classes;
+@include foundation-float-classes;
+
+.Collapsible {
+  background-color: map-get($foundation-palette, primary);
+  color: $white;
+  font-weight: 500;
+  padding: 5px 0 5px 20px;
+
+}
+
+.Collapsible__trigger {
+  display: inline-block;
+  cursor: pointer;
+  width: 100%;
+}
+
+
+.App {
+  text-align: center;
+}
+
+.App-logo { 
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+ 
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+/* FOUNDATION OVERRIDES */
+
+
+html {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 300;
+}
+h1,
+h2,
+h3 {
+font-family: 'Contrail One', cursive;
+}
+
+h4,
+h5,
+h6 {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 500;
+}
+
+p, span {
+  font-family: 'Hind Siliguri', sans-serif;
+  font-weight: 300;
+}
+
+
+/* END FOUNDATION OVERRIDES */
+
+/* TEST CLASSES  */
+
+.BORDER {
+  border: solid 1px red;
+}
+
+/* UTILITY CLASSES */
+
+/* SET HEIGHT OF COMPONENT */
+
+.h125 {
+  max-height: 125px;
+}
+
+.noborder {
+  border: none !important;
+}
+
+/* NOT SURE WHY WE HAVE TO BE SO INSISTENT HERE...
+I READ THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
+SO THIS RULE MAY GO AWAY */
+.align-center {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+
+.addPlayerModal {
+
+      box-shadow: 3px 2px 20px 0px #666;
+    position: absolute;
+    top: 20px;
+    left: 5%;
+    padding: 20px;
+    background: white;
+}
+
+
+/* FORM STYLES */
+
+.form-floating-label {
+  position: relative;
+  
+}
+
+.form-floating-label [type='text'],
+.form-floating-label [type='password'],
+.form-floating-label [type='date'],
+.form-floating-label [type='datetime'],
+.form-floating-label [type='datetime-local'],
+.form-floating-label [type='month'],
+.form-floating-label [type='week'],
+.form-floating-label [type='email'],
+.form-floating-label [type='number'],
+.form-floating-label [type='search'],
+.form-floating-label [type='tel'],
+.form-floating-label [type='time'],
+.form-floating-label [type='url'],
+.form-floating-label [type='color'],
+.form-floating-label textarea {
+  margin-bottom: 0;
+  color: #000;
+  font-size: 18px;
+  font-weight: 300;
+  padding: 30px 1rem 1rem 25px;
+}
+
+.form-floating-label label {
+  color: #666;
+  font-size: 18px;
+  position: absolute;
+  pointer-events: none;
+  left: 25px;
+  bottom: 0;
+  /*transition: all 0.1s;*/
+  font-weight: 300;
+}
+
+.form-floating-label textarea ~ label {
+  top: 20px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.form-floating-label input:focus ~ label,
+.form-floating-label input:disabled[value] ~ label,
+.form-floating-label.has-value input ~ label {
+  top: 0;
+  font-size: 14px;
+  color: dodgerblue;
+  font-weight: 400;
+}
+
+.form-floating-label textarea:focus ~ label,
+.form-floating-label.has-value textarea ~ label {
+  top: 0;
+  font-size: 14px;
+  color: dodgerblue;
+  font-weight: 400;
+}
