@@ -69,6 +69,10 @@ class AddPlayer extends Component {
 
     handleFormSubmit(e) {
         e.preventDefault()
+        if( e.target.value === "cancel" )
+            {
+                // GET RID OF THIS
+            }
         index.addObject(this.state, function (err, content) {
 
             console.log(content);
@@ -136,6 +140,7 @@ class AddPlayer extends Component {
                     </div>
                             <div className="small-12 column">
                                 <button className="button small success" type="submit" value="submit" >Submit</button>
+                                
                             </div>
                         </div>
             </form>

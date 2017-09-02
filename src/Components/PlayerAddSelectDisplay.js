@@ -3,9 +3,9 @@ import AddPlayer from './AddPlayer'
 import algoliasearch from 'algoliasearch'
 import _ from 'lodash'
 
-const PITCHER_DISPLAY_VIEW = "PITCHER_DISPLAY_VIEW"
-const PITCHER_SELECT_VIEW = "PITCHER_SELECT_VIEW"
-const PITCHER_TEAM_SELECT_VIEW = "PITCHER_TEAM_SELECT_VIEW"
+const PLAYER_DISPLAY_VIEW = "PITCHER_DISPLAY_VIEW"
+const PLAYER_SELECT_VIEW = "PITCHER_SELECT_VIEW"
+// const PITCHER_TEAM_SELECT_VIEW = "PITCHER_TEAM_SELECT_VIEW"
 const PLAYER_ADD_VIEW = "PLAYER_ADD_VIEW"
 
 
@@ -45,24 +45,10 @@ class PlayerAddSelectDisplay extends React.Component {
 
     componentDidMount() {
         this.searchPlayersByCurrentTeam( this.props.teamID )
-        console.log( ` Searching for players by team id:
-        
-        
-        ${this.props.teamID}
-        
-        
-        
-        Great, right!?`)
     }
 
     searchPlayersByCurrentTeam( teamID ) {
         var index = client.initIndex('little_league_players');
-        // index.setSettings({
-        //     attributesForFaceting: [
-        //         'playerTeamID'
-        //     ]
-        // });
-        // console.log("searching by id: " + this.state.currentTeamID)
         var filterString = `('playerTeamID':${teamID} )`
         index.search("", {
             "hitsPerPage": "100",
@@ -74,8 +60,8 @@ class PlayerAddSelectDisplay extends React.Component {
     }
 
     setParentState() {
-        this.props.selectPlayer(this.state.currentPlayer)
-        this.setState({ viewState: PITCHER_DISPLAY_VIEW })
+        this.props.selectPlayer(this.state.currentPlayer) // PARENT: GAMEVIEW
+        this.setState({ viewState: PLAYER_DISPLAY_VIEW })
     }
 
     allPlayersResults(err, content) {
@@ -84,9 +70,9 @@ class PlayerAddSelectDisplay extends React.Component {
             return
         }
         var players = content.hits;
-        console.log( "Players: " +  players );
+        // console.log( "Players: " +  players );
         this.setState({ players: players })
-        this.setState({ viewState: PITCHER_SELECT_VIEW })
+        this.setState({ viewState: PLAYER_SELECT_VIEW })
     }
 
     handlePlayerAdded(props, content) {
@@ -107,33 +93,26 @@ class PlayerAddSelectDisplay extends React.Component {
 
     handleChangePlayerClick(e) { // CLICKING THE 'CHANGE' BUTTON TRIGGERS THIS
         e.preventDefault()
-        this.setState({ viewState: PITCHER_TEAM_SELECT_VIEW })
+        //this.setState({ viewState: PITCHER_TEAM_SELECT_VIEW })
 
     }
 
-    // handleTeamSelection(e) { // MAKING A SELECTION FROM THE TEAM DROPDOWN
-    //     // this.props.selectPitcher( e.target )
-    //     e.preventDefault()
-    //     var teamObj = _.filter(this.state.teams, { objectID: e.target.value })
-    //     // console.log(" team id: " + e.target.value)
-    //     this.setState({ currentTeamID: e.target.value, currentTeamName: teamObj[0].teamName }, this.searchPlayersByCurrentTeam)
-
-    // }
 
     handlePlayerSelect(e) { // MAKING A SELECTION FROM THE PLAYER DROPDOWN
         e.preventDefault()
         if (e.target.value === "addNewPlayer") {
-            this.setState({ viewState: PLAYER_ADD_VIEW })
+            // this.setState({ viewState: PLAYER_ADD_VIEW }) THIS IS ON PAUSE FOR NOW
             return
         }
         var playerObj = _.filter(this.state.players, { objectID: e.target.value })
+        
         this.setState({ currentPlayer: playerObj[0] }, this.setParentState)
     }
 
     render() {
         // console.log( "state: " + this.state.viewState + " and prev state " + this.state.prevState )
         // THIS METHOD IS BEING CALLED WAY TOO MUCH I THINK... CHECK IT OUT
-        if (this.state.viewState === PITCHER_DISPLAY_VIEW) { // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
+        if (this.state.viewState === PLAYER_DISPLAY_VIEW) { // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
             return (
                 <div>
                     <h3>{this.state.currentPlayer.playerFirstName + " " + this.state.currentPlayer.playerLastName} <button className="button tiny success" onClick={this.handleChangePlayerClick} >Change</button> </h3>
@@ -141,33 +120,13 @@ class PlayerAddSelectDisplay extends React.Component {
                 </div>
 
             )
-        }
-        else if (this.state.viewState === PITCHER_TEAM_SELECT_VIEW) { // NEED TO SELECT THE PITCHER
-           
-            if (this.state.currentTeamName !== "") {
-                this.searchPlayersByCurrentTeam( this.state.currentTeamID )
-                return (<div> GETTING PITCHERS...</div>)
-            } else {
-                return (<div>
-                    <label>Select Team:
-                            <select onChange={this.handleTeamSelection}>
-                            <option disabled selected value> -- Teams... -- </option>
-                            {this.state.teams.map((team, i) =>
-                                <option key={i} label={team.teamName} value={team.objectID}>{team.teamName}</option>
-                            )}
-
-                        </select>
-                    </label>
-                </div>
-                )
-            }
-        } else if (this.state.viewState === PITCHER_SELECT_VIEW) {
+        } else if (this.state.viewState === PLAYER_SELECT_VIEW) { // CHOOSE FROM LIST OF PLAYERS
             return (<div>
-                <label>Select Player from {this.state.currentTeamName}
-                    <select onChange={this.handlePlayerSelect}>
-                        <option disabled selected value> -- Pitchers... -- </option>
+                <label>Select Player
+                    <select defaultValue='default' onChange={this.handlePlayerSelect}>
+                        <option disabled value='default'> -- Players... -- </option>
                         {this.state.players.map((player, i) =>
-                            <option key={i} value={player.objectID}>{player.playerFirstName + " " + player.playerLastName}</option>
+                            <option key={i} value={player.objectID}>{player.playerFirstName + " " + player.playerLastName} {player.isPitcher ? "(P)" : ""}</option>
                         )}
                         <option label="Add New Player" value="addNewPlayer">Add New Player</option>
 
@@ -194,3 +153,27 @@ class PlayerAddSelectDisplay extends React.Component {
 
 
 export default PlayerAddSelectDisplay
+
+
+
+// THIS IS FROM WHEN THIS COMPONENT HANDLED THE TEAM LOOKUP TOO, DOESN'T ANYMORE
+
+// else if (this.state.viewState === PITCHER_TEAM_SELECT_VIEW) { // NEED TO SELECT THE PITCHER
+    
+//      if (this.state.currentTeamName !== "") {
+//          this.searchPlayersByCurrentTeam( this.state.currentTeamID )
+//          return (<div> GETTING PITCHERS...</div>)
+//      } else {
+//          return (<div>
+//              <label>Select Team:
+//                      <select defaultValue='default' onChange={this.handleTeamSelection}>
+//                      <option disabled value='default'> -- Teams... -- </option>
+//                      {this.state.teams.map((team, i) =>
+//                          <option key={i} label={team.teamName} value={team.objectID}>{team.teamName}</option>
+//                      )}
+
+//                  </select>
+//              </label>
+//          </div>
+//          )
+//      }

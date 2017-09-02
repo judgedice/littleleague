@@ -26,12 +26,11 @@ class PitchCounter extends React.Component {
             <div>
                 <div className="grid-container">
                     <div className="grid-x grid-margin-x">
-                        <button id="ball" className="button cell small-6" onClick={this.props.addNewPitch} >Ball</button>
-                        <button id="strike" className="button cell small-6" onClick={this.props.addNewPitch} >Strike</button>
+                        <button id="ball" className="button cell small-6 rounded" onClick={this.props.addNewPitch} >Ball</button>
+                        <button id="strike" className="button cell small-6 rounded" onClick={this.props.addNewPitch} >Strike</button>
                     </div>
                     <div className="grid-x grid-margin-x">
-                        <button id="remove" className="button tiny small-6 large-4 cell " onClick={this.addNewPitch}>Remove Pitch</button>
-                        <button className="button tiny small-6 large-4 cell alert" onClick={this.props.endInning} >End Inning</button>
+                        <button id="remove" className="button tiny small-6 large-4 cell " onClick={this.props.addNewPitch}>Remove Pitch</button>                      
                     </div>
                    
                 </div>

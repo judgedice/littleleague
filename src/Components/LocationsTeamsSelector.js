@@ -7,14 +7,8 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import { beginSearch } from "../actions/gameactions";
 
-//
-//
-// TODO... STYLE THIS SHIT, OTHERWISE I THINK YOU'RE DONE
-//
-//
-//
-//
-//
+// TODO: VERIFY HOW WE HANDLE TEAMS AS A STATE OF JUST THIS COMPONENT
+// IS THIS THE MOST EFFICIENT WAY?
 
 class LocationsTeamSelector extends Component {
   constructor(props) {
@@ -35,7 +29,8 @@ class LocationsTeamSelector extends Component {
 
   handleTeamSelection(e) {
     e.preventDefault();
-    var teamObj = _.filter(this.state.teams, { objectID: e.target.value });
+    var teamObj = _.filter(this.props.teams, { objectID: e.target.value });
+    // console.log( this + " team array:  " + this.props.teams )
     this.props.handleTeamSelect(teamObj[0], e.target.id); // THE TEAMOBJECT IS GOING TO BE A 1 ITEMED ARRAY
   }
 
@@ -78,7 +73,7 @@ class LocationsTeamSelector extends Component {
 
 const mapStateToProps = function(store) {
   return {
-    teams: store.gameState.teams
+    teams: store.gameState.teams // THIS SUCKS THAT I CAN'T INSPECT THE PROPERTIES OF "STORE" ... SEEMS LIKE A BUG
   };
 };
 

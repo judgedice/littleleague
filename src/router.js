@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
-import GameView from './Containers/Game';
+import GameView from './Containers/GameView';
 
 
 

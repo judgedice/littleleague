@@ -1,10 +1,10 @@
 
-import * as types from '../constants'
+import * as constants from '../constants'
 
 export function getTeamsSuccess( teams ) {
   // WORKS
   return {
-    type: types.GET_TEAMS_SUCCESS,
+    type: constants.actionTypes.GET_TEAMS_SUCCESS,
     teams
   };
 }
@@ -12,18 +12,29 @@ export function getTeamsSuccess( teams ) {
 export function beginSearch( searchType, message )
 {
     return {
-        type: types.LOAD_TEAMS,
+        type: constants.actionTypes.LOAD_TEAMS,
         searchType,
         message
     }
 }
 
-export function selectTeamsSuccess( teams, gameID, message )
+export function selectTeamsSuccess( gameID, gameInfo, message )
 {
   return {
-    type: types.SELECT_TEAMS,
-    teams, // ARRAY OF THE TWO COMPETING TEAMS
-    gameID,
+    type: constants.actionTypes.SELECT_TEAMS,
+    gameID, 
+    gameInfo, // GAME INFO - TEAMS, LOCATION, AND DATE
     message
   }
+}
+
+export function selectPlayersSuccess(player1, player2, message ) {
+
+  return {
+    type: constants.actionTypes.SELECT_PLAYERS,
+    player1,
+    player2,
+    message    
+  }
+  
 }

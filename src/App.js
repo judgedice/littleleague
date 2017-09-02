@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PitchCountView from './Containers/PitchCountView'
 import { update } from 'react-addons-update'
-import GameView from "./Containers/Game"
+import GameView from "./Containers/GameView"
 // import { Provider } from "react-redux"
 
 

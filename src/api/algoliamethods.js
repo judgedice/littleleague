@@ -30,6 +30,6 @@ export function addNewGameData(gameObject) {
 
   index.addObject(
     gameObject ).then( response => {
-        store.dispatch( selectTeamsSuccess( response.objectID, gameObject ))
+        store.dispatch( selectTeamsSuccess( response.objectID, gameObject, "Game Saved to Cloud" ))
     });
 }
