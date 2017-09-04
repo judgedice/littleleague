@@ -81,6 +81,7 @@ class GameView extends Component {
         " game view handle Players set, pitchername: " +
           this.state.currentPitcherName
       );
+      // PITCHER FIRST, THEN BATTER, ALWAYS
       store.dispatch(
         selectPlayersSuccess(
           this.state.currentPitcherName,

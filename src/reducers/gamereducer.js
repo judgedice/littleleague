@@ -54,8 +54,8 @@ const gameReducer = function(state = initialState, action) {
       case constants.actionTypes.SELECT_PLAYERS:
       // console.log( "inside gamereducer... pitcher name: " + action.player1 )
       return Object.assign({}, state, {
-       currentPitcherName: action.player1,
-       currentAtBatName: action.player2,
+       currentPitcherName: action.pitcher,
+       currentAtBatName: action.batter,
         viewState: constants.viewStates.RECORD_GAME_VIEW
       });
 

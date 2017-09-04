@@ -195,7 +195,7 @@ class RecordInningView extends Component {
       <div className="grid-container">
         <div className="grid-x cell">
           <span className="cell">Inning: 1 Outs:1</span>
-          <span className="cell">Pitcher: { this.props.storeState.currentPitcher} </span>
+          <span className="cell">Pitcher: { this.props.storeState.currentPitcherName } </span>
         </div>
 
         <div className="grid-x cell small-12 align-center pitcher-counts">
@@ -205,6 +205,7 @@ class RecordInningView extends Component {
         </div>
 
         <PitchCounter addNewPitch={this.addNewPitch} />
+        <div className="cell">Batter: { this.props.storeState.currentAtBatName }</div>
         <AtBatResult endInning={this.endInning} />
       </div>
     );
