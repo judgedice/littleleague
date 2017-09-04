@@ -5,12 +5,14 @@ const initialState = {
   homeTeam: {
     teamName: "",
     objectID: 0,
-    currentScore: 0
+    currentScore: 0,
+    players: []
   },
   awayTeam: {
     teamName: "",
     objectID: 0,
-    currentScore: 0
+    currentScore: 0,
+    players: []
   },
   teams: [],
   gameID: 0,
@@ -37,8 +39,20 @@ const gameReducer = function(state = initialState, action) {
         teamsSelected: true,
         viewState: constants.viewStates.SELECT_PLAYERS_VIEW
       });
+      case constants.actionTypes.GET_PLAYERS_SUCCESS: // LIST OF PLAYERS BY TEAM RETRIEVED
+      // TODO... ALGOLIA SENDS "HIGHLIGHTED RESULTS", WHICH WE DON'T NEEED
+        var teamString = "";
+        if( action.teamID === state.homeTeam.objectID ) teamString = "homeTeam"
+          else teamString = "awayTeam"
+        var tempTeamObject = state[teamString];
+        tempTeamObject.players = action.players;
+        return Object.assign({}, state, {
+          [teamString]:tempTeamObject
+          //viewState: constants.viewStates.RECORD_GAME_VIEW // DON'T CHANGE VIEWSTATE JUST YET
+        })
+
       case constants.actionTypes.SELECT_PLAYERS:
-      console.log( "inside gamereducer... pitcher name: " + action.player1 )
+      // console.log( "inside gamereducer... pitcher name: " + action.player1 )
       return Object.assign({}, state, {
        currentPitcherName: action.player1,
        currentAtBatName: action.player2,

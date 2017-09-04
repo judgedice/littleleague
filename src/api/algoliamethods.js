@@ -1,6 +1,6 @@
 import algoliasearch from "algoliasearch";
 import store from "../store";
-import { getTeamsSuccess, selectTeamsSuccess } from "../actions/gameactions";
+import { getTeamsSuccess, selectTeamsSuccess, getPlayersSuccess } from "../actions/gameactions";
 
 // ALGOLIA SETUP ... NEED TO ELIMINATE THIS API KEY AS IT IS PUBLISHED AND ADMIN
 const client = algoliasearch("M008EL2TS7", "2f534330dc6a3ee61e2a3b7a0c5b26fe");
@@ -22,6 +22,21 @@ export function searchTeams() {
     });
 
   // return (<div>getting teams</div>)
+}
+
+export function getPlayersByTeam( teamID )
+{
+    var index = client.initIndex('little_league_players');
+    var filterString = `('playerTeamID':${teamID} )`
+    index.search("", {
+        "hitsPerPage": "100",
+        "filters": filterString,
+        "attributesToRetrieve": ["playerFirstName", "playerLastName", "isPitcher", "playerAge", "objectID"]
+        //"facets": "[]"
+    }).then(response => {
+      store.dispatch( getPlayersSuccess( teamID, response.hits, "Players have been returned from the service" ) );
+
+})
 }
 
 export function addNewGameData(gameObject) {

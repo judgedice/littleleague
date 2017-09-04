@@ -1,12 +1,22 @@
 
 import * as constants from '../constants'
 
-export function getTeamsSuccess( teams ) {
+export function getTeamsSuccess( teams, message ) {
   // WORKS
   return {
     type: constants.actionTypes.GET_TEAMS_SUCCESS,
-    teams
+    teams,
+    message
   };
+}
+
+export function getPlayersSuccess( teamID, players, message ){
+  return {
+    type: constants.actionTypes.GET_PLAYERS_SUCCESS,
+    teamID,
+    players,
+    message
+  }
 }
 
 export function beginSearch( searchType, message )
@@ -26,15 +36,16 @@ export function selectTeamsSuccess( gameID, gameInfo, message )
     gameInfo, // GAME INFO - TEAMS, LOCATION, AND DATE
     message
   }
-}
+} 
 
-export function selectPlayersSuccess(player1, player2, message ) {
+export function selectPlayersSuccess( pitcher, batter, message ) {
 
   return {
     type: constants.actionTypes.SELECT_PLAYERS,
-    player1,
-    player2,
+    pitcher,
+    batter,
     message    
   }
   
 }
+

@@ -52,8 +52,12 @@ class GameView extends Component {
   // UTILITY METHODS
 
   // EVENT HANDLERS
+
+  // Q: THIS COMPONENT DOESN'T REALLY NEED TO KNOW ABOUT THE CURRENT PLAYERS
+  // SO HOW DO I REFACTOR THIS TO KEEP THE STATE IN THE STORE
+  //  I HAVE TO WAIT FOR BOTH PLAYERS (HOME AND AWAY) TO BE SELECTED
   setPlayerStates(prop) {
-    console.log(" GameView, setting player states: " + prop.isPitcher);
+    // console.log(" GameView, setting player states: " + prop.isPitcher);
     if (prop.isPitcher) {
       this.setState(
         {
@@ -113,8 +117,8 @@ class GameView extends Component {
       this.state.location !== ""
     ) {
       var gameObject = {
-        homeTeam: this.state.homeTeam.objectID,
-        awayTeam: this.state.awayTeam.objectID,
+        homeTeam: this.state.homeTeam,
+        awayTeam: this.state.awayTeam,
         location: this.state.location,
         date: new Date().toDateString()
       };
@@ -123,7 +127,7 @@ class GameView extends Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() {};
 
   render() {
     function showEditLink() {
@@ -191,14 +195,14 @@ class GameView extends Component {
             <div className="cell small-4 medium-4 large-4">
               
               <PlayerAddSelectDisplay
-                teamID={this.state.homeTeam.objectID}
+                team={this.props.storeState.homeTeam}
                 selectPlayer={this.setPlayerStates}
               />
             </div>
             <div className="cell  small-4 medium-4 large-4" />
             <div className="cell  small-4 medium-4 large-4">
               <PlayerAddSelectDisplay
-                teamID={this.state.awayTeam.objectID}
+                team={this.props.storeState.homeTeam}
                 selectPlayer={this.setPlayerStates}
               />
             </div>
