@@ -43,14 +43,7 @@ class GameView extends Component {
 
   // EVENT HANDLERS
 
-  // Q: THIS COMPONENT DOESN'T REALLY NEED TO KNOW ABOUT THE CURRENT PLAYERS
-  // SO HOW DO I REFACTOR THIS TO KEEP THE STATE IN THE STORE
-  //  I HAVE TO WAIT FOR BOTH PLAYERS (HOME AND AWAY) TO BE SELECTED
-
-  // handleTeamsLocationSetButtonClick( gameObject ) { // AKA GOCLICK
-  //   api.addNewGameData( gameObject ); // TODO: I DON'T CARE IF THIS WORKED OR NOT. I HAVE LOCAL STATE. BUT I WANT TO INFORM THE USER IF IT DIDN'T WORK
-  // }
-
+ 
   componentDidMount() {}
 
   render() {
@@ -72,9 +65,7 @@ class GameView extends Component {
           break;
         case constants.viewStates.RECORD_GAME_VIEW:
           return (
-            <div className="grid-y grid-frame">
-              <RecordInningView />;
-            </div>
+              <RecordInningView />
           );
         case constants.viewStates.DEFAULT_GAME_VIEW:
           return (
@@ -125,7 +116,6 @@ class GameView extends Component {
     return (
       <div id="GameView" className="grid-y grid-frame">
         <LocationsTeamsSelector
-          goClick={this.handleTeamsLocationSetButtonClick}
         />
         { showView() }
       </div>

@@ -162,72 +162,92 @@ class LocationsTeamSelector extends Component {
       );
     };
 
+    const showView = () => {
+      switch ( this.props.storeState.viewState) {
+        case constants.viewStates.SETUP_GAME_VIEW:
+          return (
+            <div
+              id="jsxSetGameLocationAndTeams"
+              className="cell small-12 medium-12 large-12"
+            >
+              <div className="grid-x grid-padding-y cell">
+                <div className="auto cell" />
+                <div className="cell small-8 medium-6 large-4">
+                  <label>
+                    {" "}
+                    Game Location (eg. Andover, MA):
+                    <input
+                      onChange={this.handleLocationFieldChange}
+                      type="text"
+                    />
+                  </label>
+                </div>
+                <div className="auto cell" />
+              </div>
+              <div className="grid-x grid-padding-y cell small-12 medium-12 large-12 ">
+                <div className="cell text-center small-4 medium-4 large-4">
+                  <TeamSelector
+                    team="homeTeam"
+                    teamLabel="Home"
+                    handleTeamSelection={this.handleTeamSelection}
+                    teams={this.props.storeState.teams}
+                  />
+                </div>
+                <div className="auto cell">
+                  <h3 className="text-center subheader vertical-middle">vs</h3>
+                </div>
+                <div className=" cell text-center small-4 medium-4 large-4">
+                  <TeamSelector
+                    team="awayTeam"
+                    teamLabel="Away"
+                    handleTeamSelection={this.handleTeamSelection}
+                    teams={this.props.storeState.teams}
+                  />
+                </div>
+              </div>
+
+              {this.props.storeState.teamsSelected ? (
+                <div
+                  id="jsxPlayerSelect"
+                  className="cell grid-x small-12 medium-12 large-12"
+                >
+                  <PlayerAddSelectDisplay
+                    team={this.state.homeTeam}
+                    selectPlayer={this.setPlayerStates}
+                  />
+                  <div className="auto cell">
+                    <h3 className="text-center subheader vertical-middle">
+                      vs
+                    </h3>
+                  </div>
+                  <PlayerAddSelectDisplay
+                    team={this.state.awayTeam}
+                    selectPlayer={this.setPlayerStates}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
+              {this.state.playersSelected ? (
+                <div className="cell small-12 medium-12 large-12 text-center">
+                  <button className="button" onClick={this.setupComplete}>
+                    GO!
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
+          );
+        case constants.viewStates.RECORD_GAME_VIEW:
+          return "";
+      }
+    };
+
     return (
-      <div
-        id="LocationsTeamsSelector"
-        className="auto cell grid-container fluid"
-      >
+      <div id="LocationsTeamsSelector" className="cell grid-x fluid">
         <GameHeader />
-        <div id="jsxSetGameLocationAndTeams" className="cell small-12 medium-12 large-12">
-          <div className="grid-x grid-padding-y cell">
-            <div className="auto cell" />
-            <div className="cell small-8 medium-6 large-4">
-              <label>
-                {" "}
-                Game Location (eg. Andover, MA):
-                <input onChange={this.handleLocationFieldChange} type="text" />
-              </label>
-            </div>
-            <div className="auto cell" />
-          </div>
-          <div className="grid-x grid-padding-y cell small-12 medium-12 large-12 ">
-            <div className="cell text-center small-4 medium-4 large-4">
-              <TeamSelector
-                team="homeTeam"
-                teamLabel="Home"
-                handleTeamSelection={this.handleTeamSelection}
-                teams={this.props.storeState.teams}
-              />
-            </div>
-            <div className="auto cell">
-              <h3 className="text-center subheader vertical-middle">vs</h3>
-            </div>
-            <div className=" cell text-center small-4 medium-4 large-4">
-              <TeamSelector
-                team="awayTeam"
-                teamLabel="Away"
-                handleTeamSelection={this.handleTeamSelection}
-                teams={this.props.storeState.teams}
-              />
-            </div>
-          </div>
-        </div>
-        {this.props.storeState.teamsSelected ? (
-          <div id="jsxPlayerSelect" className="cell grid-x small-12 medium-12 large-12">
-            <PlayerAddSelectDisplay
-              team={this.state.homeTeam}
-              selectPlayer={this.setPlayerStates}
-            />
-            <div className="auto cell">
-              <h3 className="text-center subheader vertical-middle">vs</h3>
-            </div>
-            <PlayerAddSelectDisplay
-              team={this.state.awayTeam}
-              selectPlayer={this.setPlayerStates}
-            />
-          </div>
-        ) : (
-          ""
-        )}
-        {this.state.playersSelected ? (
-          <div className="cell small-12 medium-12 large-12 text-center">
-            <button className="button" onClick={this.setupComplete} >
-              GO!
-            </button>
-          </div>
-        ) : (
-          ""
-        )}
+        {showView()}
       </div>
     );
   }

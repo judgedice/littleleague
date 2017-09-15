@@ -192,7 +192,7 @@ class RecordInningView extends Component {
     // TODO...
     // IMPLEMENT END-INNING
     return (
-      <div className="grid-container">
+      <div className="auto cell grid-x fluid BORDER">
         <div className="grid-x cell text-center">
           <span className="cell small-12 medium-12 large-12 font-italic">
             Inning: 1 Outs:1
