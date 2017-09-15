@@ -37,7 +37,6 @@ class GameView extends Component {
       teamsSelected: false,
       temporaryGameObject: {}
     };
-
   }
 
   // UTILITY METHODS
@@ -47,86 +46,91 @@ class GameView extends Component {
   // Q: THIS COMPONENT DOESN'T REALLY NEED TO KNOW ABOUT THE CURRENT PLAYERS
   // SO HOW DO I REFACTOR THIS TO KEEP THE STATE IN THE STORE
   //  I HAVE TO WAIT FOR BOTH PLAYERS (HOME AND AWAY) TO BE SELECTED
-  
 
   // handleTeamsLocationSetButtonClick( gameObject ) { // AKA GOCLICK
   //   api.addNewGameData( gameObject ); // TODO: I DON'T CARE IF THIS WORKED OR NOT. I HAVE LOCAL STATE. BUT I WANT TO INFORM THE USER IF IT DIDN'T WORK
   // }
 
-  componentDidMount() {};
+  componentDidMount() {}
 
   render() {
-       // let collapseTrigger = <div>View Game Stats for {this.state.homeTeam.name}</span></div>
-    
+    // let collapseTrigger = <div>View Game Stats for {this.state.homeTeam.name}</span></div>
+
     function collapseTrigger(prop = "No Teams Selected") {
       return <span>View Game Stats for {prop}</span>;
     }
 
     // if ( this.state.currentInning === 0 && ( !this.state.homeTeam && !this.state.awayTeam ) ) showEditLink = "";
+    var  showView = () => {
+      switch (this.props.storeState.viewState) {
+        case constants.viewStates.SETUP_GAME_VIEW:
+          return ( "" );
+        case constants.viewStates.SELECT_GAME_VIEW:
+          break;
 
-    switch (this.props.storeState.viewState) {
-      case constants.viewStates.SETUP_GAME_VIEW:
-        return (
-          <div id="GameLayout" className="grid-y grid-frame">
-            <LocationsTeamsSelector
-              goClick={this.handleTeamsLocationSetButtonClick}
-            />  
-          </div>
-        );
-      case constants.viewStates.SELECT_GAME_VIEW:
-        break;
-
-      case constants.viewStates.QUICK_RECORD_VIEW:
-        break;
-      case constants.viewStates.RECORD_GAME_VIEW:
-        return (
-          <div>
-            <RecordInningView />;
-          </div>
-        );
-      case constants.viewStates.DEFAULT_GAME_VIEW:
-        return (
-          <div className="cell">
-            <div className="cell callout small-10 align-center text-center">
-              <span className="cell">
-                Now Pitching: {this.state.currentPitcherName}
-              </span>
+        case constants.viewStates.QUICK_RECORD_VIEW:
+          break;
+        case constants.viewStates.RECORD_GAME_VIEW:
+          return (
+            <div className="grid-y grid-frame">
+              <RecordInningView />;
             </div>
-            <GameScore
-              team1={this.state.homeTeam.name}
-              score1={this.state.homeTeam.currentScore}
-              team2={this.state.awayTeam.name}
-              score2={this.state.awayTeam.currentScore}
-            />
-            <div className="grid-x large-10 small-10 align-center cell callout primary text-center">
-              <span className="cell small-5">
-                INNING : {this.state.currentInning}
-              </span>
-              <span className="cell small-2" />
-              <span className="cell small-5">
-                OUTS: {this.state.currentOutCount}
-              </span>
+          );
+        case constants.viewStates.DEFAULT_GAME_VIEW:
+          return (
+            <div className="cell">
+              <div className="cell callout small-10 align-center text-center">
+                <span className="cell">
+                  Now Pitching: {this.state.currentPitcherName}
+                </span>
+              </div>
+              <GameScore
+                team1={this.state.homeTeam.name}
+                score1={this.state.homeTeam.currentScore}
+                team2={this.state.awayTeam.name}
+                score2={this.state.awayTeam.currentScore}
+              />
+              <div className="grid-x large-10 small-10 align-center cell callout primary text-center">
+                <span className="cell small-5">
+                  INNING : {this.state.currentInning}
+                </span>
+                <span className="cell small-2" />
+                <span className="cell small-5">
+                  OUTS: {this.state.currentOutCount}
+                </span>
+              </div>
+              <div className="cell small-10 align-center">
+                <Collapsible
+                  trigger={collapseTrigger(this.state.homeTeam)}
+                  transitionTime={100}
+                >
+                  <p>
+                    This is the collapsible content. It can be any element or
+                    React component you like.
+                  </p>
+                  <p>
+                    It can even be another Collapsible component. Check out the
+                    next section!
+                  </p>
+                </Collapsible>
+              </div>
             </div>
-            <div className="cell small-10 align-center">
-              <Collapsible
-                trigger={collapseTrigger(this.state.homeTeam)}
-                transitionTime={100}
-              >
-                <p>
-                  This is the collapsible content. It can be any element or
-                  React component you like.
-                </p>
-                <p>
-                  It can even be another Collapsible component. Check out the
-                  next section!
-                </p>
-              </Collapsible>
-            </div>
-          </div>
-        );
-      default:
-        return <div> nothing </div>;
+          );
+        default:
+          return <div> nothing </div>;
+      }
     }
+
+    // NEED TO CHANGE LOCATIONS TEAM SELECTOR TO "GAMEHEADERANDSETUP"
+    return (
+      <div id="GameView" className="grid-y grid-frame">
+        <LocationsTeamsSelector
+          goClick={this.handleTeamsLocationSetButtonClick}
+        />
+        { showView() }
+      </div>
+    );
+
   }
 }
 
