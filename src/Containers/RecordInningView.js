@@ -32,49 +32,60 @@ class RecordInningView extends Component {
     this.state = stateObject;
     // this.modifyPitch = this.modifyPitch.bind(this)
     this.addNewPitch = this.addNewPitch.bind(this);
-    this.handleSelectPitcher = this.handleSelectPitcher.bind(this);
+    // this.handleSelectPitcher = this.handleSelectPitcher.bind(this);
 
-    this.handleSelectPitcher(this.props);
+    // this.handleSelectPitcher(this.props);
   }
 
-  handleSelectPitcher(props) {
-    // THIS METHOD IS CALLED AFTER SELECTING TEAM AND PLAYER IS COMPLETE IN PITCHER DISPLAY
-    this.setState({
-      currentPitcher: props.currentPlayer,
-      currentTeamID: props.currentTeamID,
-      currentTeamName: props.currentTeamName
-    });
+  // handleSelectPitcher(props) {
+  //   // THIS METHOD IS CALLED AFTER SELECTING TEAM AND PLAYER IS COMPLETE IN PITCHER DISPLAY
+  //   this.setState({
+  //     currentPitcher: props.currentPlayer,
+  //     currentTeamID: props.currentTeamID,
+  //     currentTeamName: props.currentTeamName
+  //   });
 
-    // OBJECT IN PROPS (PITCHER DISPLAY STATE OBJECT)
-    // {
-    // showAddPlayer: false,
-    // viewState: "PlayerAddSelectDisplay",
-    // teams: [],
-    // players: [],
-    // currentTeamID: 0,
-    // currentTeamName: "",
-    // currentPlayer: {}
-    //  }
-  }
+  //   // OBJECT IN PROPS (PITCHER DISPLAY STATE OBJECT)
+  //   // {
+  //   // showAddPlayer: false,
+  //   // viewState: "PlayerAddSelectDisplay",
+  //   // teams: [],
+  //   // players: [],
+  //   // currentTeamID: 0,
+  //   // currentTeamName: "",
+  //   // currentPlayer: {}
+  //   //  }
+  // }
 
   addNewPitch(e) {
     e.preventDefault();
+    var statePitchArray = this.state.pitchesThisInning;
+    
+    // REMOVE PITCH
+    if (e.target.id === "remove")
+    {
 
-    if (!this.state.currentPitcher.playerFirstName) {
-      alert("Select a Pitcher First!");
+      // THERE'S NO PITCH IN QUEUE...
+      if( !this.state.pitchInQueue.gameDate )
+      {
+        statePitchArray.pop();
+        this.setState( { pitchesThisInning: statePitchArray } )
+      }
+      else {
+        this.setState({pitchInQueue:{}});
+      }
       return;
     }
 
     var newPitch = {
       type: "pitch", // RECORD TYPE FOR ALGOLIA SEARCHES
       pitchType: "", // TODO: ALLOW FOR PITCHTYPE MODS
-      inning: this.state.currentInning,
+      inning: this.props.storeState.currentInning,
       pitchResult: e.target.id,
-      opposingPlayer: this.state.currentBatterID, // ALGOLIA ID
-      pitcher: this.state.currentPitcher.objectID // ALGOLIA ID
+      opposingPlayer: this.props.storeState.currentBatter.objectID, // ALGOLIA ID
+      pitcher: this.props.storeState.currentPitcher.objectID, // ALGOLIA ID
+      gameDate: this.props.storeState.gameDate
     };
-
-    var statePitchArray = this.state.pitchesThisInning;
 
     if (!this.state.pitchInQueue.gameDate) {
       this.setState({ pitchInQueue: newPitch });
@@ -136,7 +147,7 @@ class RecordInningView extends Component {
   countTotal() {
     if (this.state.pitchInQueue.gameDate)
       return this.state.pitchesThisInning.length + 1;
-    else return 0;
+    else return this.state.pitchesThisInning.length;
   }
 
   /**
@@ -192,8 +203,8 @@ class RecordInningView extends Component {
     // TODO...
     // IMPLEMENT END-INNING
     return (
-      <div className="auto cell grid-x fluid BORDER">
-        <div className="grid-x cell text-center">
+      <div className="auto cell grid-y grid-x fluid">
+        <div id="jsxPitcherName" className="grid-x cell text-center">
           <span className="cell small-12 medium-12 large-12 font-italic">
             Inning: 1 Outs:1
           </span>
@@ -202,15 +213,26 @@ class RecordInningView extends Component {
           </span>
         </div>
 
-        <div className="grid-x cell small-12 align-center pitcher-counts">
-          <div className="cell small-4">{this.countStrikes()} Strikes</div>
-          <div className="cell small-4">{this.countTotal()} Total</div>
-          <div className="cell small-4">{this.countBalls()} Balls</div>
-          <PitchCounter addNewPitch={this.addNewPitch} />
+        <div className="grid-x auto cell small-12 align-center ">
+          <div className="cell grid-x small-12 pitcher-counts">
+            <div className="cell small-4 pitcher-stat">
+              <p className="vertical-middle"> {this.countStrikes()} Strikes </p>
+            </div>
+            <div className="cell small-4 pitcher-stat total">
+            <p className="vertical-middle"> {this.countTotal()} Total</p>
+            </div>
+            <div className="cell small-4 pitcher-stat">
+            <p className="vertical-middle"> {this.countBalls()} Balls</p>
+            </div>
+          </div>
+
+          <div className="grid-x cell small-12 align-center pitcher-count-buttons">
+            <PitchCounter addNewPitch={this.addNewPitch} />
+          </div>
         </div>
 
-        <div className="cell">
-          Batter: {this.props.storeState.currentAtBatName}
+        <div className="cell text-center batter-row">
+          <p className="verticalMiddle">Batter: {this.props.storeState.currentAtBatName}</p>
         </div>
         <AtBatResult endInning={this.endInning} />
       </div>

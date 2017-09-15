@@ -23,6 +23,8 @@ class LocationsTeamSelector extends Component {
       location: "",
       currentAtBatName: "",
       currentPitcherName: "",
+      currentPitcher: {},
+      currentBatter: {},
       playersSelected: false,
       homeTeam: {
         teamName: "",
@@ -92,13 +94,13 @@ class LocationsTeamSelector extends Component {
     if (prop.isPitcher) {
       this.setState(
         {
-          currentPitcherName: prop.playerFirstName + " " + prop.playerLastName
+          currentPitcherName: prop.playerFirstName + " " + prop.playerLastName, currentPitcher: prop
         },
         this.handlePlayersSet
       );
     } else
       this.setState(
-        { currentAtBatName: prop.playerFirstName + " " + prop.playerLastName },
+        { currentAtBatName: prop.playerFirstName + " " + prop.playerLastName, currentBatter: prop },
         this.handlePlayersSet
       );
   }
@@ -118,6 +120,8 @@ class LocationsTeamSelector extends Component {
       selectPlayersSuccess(
         this.state.currentPitcherName,
         this.state.currentAtBatName,
+        this.state.currentPitcher,
+        this.state.currentBatter,
         "Players Selected, PLAY BALL!"
       )
     );

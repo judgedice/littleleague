@@ -76,7 +76,7 @@ export function updateAddGameData(gameObject) {
   };
 
   if (tempStore.gameState.gameID !== 0) {
-    
+    // UPDATE GAME
     index.saveObject({
         homeTeam: gameObject.homeTeam.objectID,
         awayTeam: gameObject.awayTeam.objectID,
@@ -89,7 +89,7 @@ export function updateAddGameData(gameObject) {
       });
     return;
   }
-
+  // NO GAME STORED YET, ADD ONE TO ALGOLIA 
   index.addObject(tempObject).then(response => {
     sendMessage(response);
   });

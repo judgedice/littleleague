@@ -1786,7 +1786,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Hind Siliguri", Roboto, Arial, sans-serif;
+  font-family: "Contrail One", sans-serif !important;
   font-style: normal;
   font-weight: normal;
   color: inherit;
@@ -4687,7 +4687,7 @@ body {
 
 /* FOUNDATION OVERRIDES */
 html {
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 300;
   margin: 5px 10px;
   color: #0C2340; }
@@ -4695,16 +4695,17 @@ html {
 h1,
 h2,
 h3 {
-  font-family: 'Contrail One', sans-serif; }
+  font-family: "Contrail One", sans-serif; }
 
 h4,
 h5,
 h6 {
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 500; }
 
-p, span {
-  font-family: 'Hind Siliguri', sans-serif;
+p,
+span {
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 300; }
 
 /* END FOUNDATION OVERRIDES */
@@ -4743,26 +4744,26 @@ SO THIS RULE MAY GO AWAY */
 
 /* FORM STYLES */
 .action-button {
-  font-family: 'Contrail One', sans-serif !important;
+  font-family: "Contrail One", sans-serif !important;
   font-size: 1.3rem; }
 
 .form-floating-label {
   position: relative; }
 
-.form-floating-label [type='text'],
-.form-floating-label [type='password'],
-.form-floating-label [type='date'],
-.form-floating-label [type='datetime'],
-.form-floating-label [type='datetime-local'],
-.form-floating-label [type='month'],
-.form-floating-label [type='week'],
-.form-floating-label [type='email'],
-.form-floating-label [type='number'],
-.form-floating-label [type='search'],
-.form-floating-label [type='tel'],
-.form-floating-label [type='time'],
-.form-floating-label [type='url'],
-.form-floating-label [type='color'],
+.form-floating-label [type="text"],
+.form-floating-label [type="password"],
+.form-floating-label [type="date"],
+.form-floating-label [type="datetime"],
+.form-floating-label [type="datetime-local"],
+.form-floating-label [type="month"],
+.form-floating-label [type="week"],
+.form-floating-label [type="email"],
+.form-floating-label [type="number"],
+.form-floating-label [type="search"],
+.form-floating-label [type="tel"],
+.form-floating-label [type="time"],
+.form-floating-label [type="url"],
+.form-floating-label [type="color"],
 .form-floating-label textarea {
   margin-bottom: 0;
   color: #000;
@@ -4803,7 +4804,39 @@ SO THIS RULE MAY GO AWAY */
 /* UNIQUE CONTAINERS  */
 .pitcher-row {
   height: 57px;
-  padding-top: .7rem;
-  font-family: 'Contrail One', serif;
+  padding-top: 0.7rem;
+  font-family: "Contrail One", sans-serif !important;
   font-size: 1.5rem;
   background: gold; }
+
+.pitcher-counts {
+  text-align: center; }
+
+.pitcher-stat p {
+  font-family: "Contrail One", sans-serif !important;
+  font-size: 1.3rem; }
+
+.pitcher-stat.total p {
+  font-size: 2.3rem; }
+
+/* HACK TOWN HERE.. WOULD LIKE TO IMPROVE ON THIS */
+.count-button {
+  border-radius: 50%;
+  background: #4679bd;
+  box-shadow: 0 0 5px gray;
+  width: 150px;
+  height: 160px; }
+
+.pitcher-count-buttons {
+  position: relative;
+  top: 30px;
+  height: 75%; }
+
+.batter-row {
+  height: 55px;
+  font-family: "Contrail One", sans-serif !important;
+  font-size: 1.4rem;
+  color: white;
+  background-color: #8a8a8a;
+  padding: 10px 0;
+  margin-bottom: 8px; }

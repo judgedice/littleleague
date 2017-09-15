@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class AtBatResult extends Component {
   render() {
     return (
-      <div className="grid-x">
+      <div className="grid-x grid-margin-x">
         <div className="grid-x cell small-4 medium-4 large-6">
           <button id="hit-batter" className="button cell" onClick={this.props.endInning} >
             Hit Batter
@@ -16,15 +16,15 @@ class AtBatResult extends Component {
         </div>
         <div className="grid-x cell small-4 medium-4 large-6">
           <button id="strikeout" className="button cell" onClick={this.props.endInning} >
-            strikeout
+            Strikeout
           </button>
         </div>
-        <div className="grid-x cell small-4 medium-4 large-6">
+        <div className="grid-x cell small-6 medium-6 large-6">
           <button id="field-out" className="button cell" onClick={this.props.endInning} >
             Field Out
           </button>
         </div>
-        <div className="grid-x cell small-4 medium-4 large-6">
+        <div className="grid-x cell small-6 medium-6 large-6">
           <button id="hit" className="button cell" onClick={this.props.endInning} >
             Hit
           </button>

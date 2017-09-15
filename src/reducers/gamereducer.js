@@ -17,8 +17,11 @@ const initialState = {
   teams: [],
   
   gameID: 0,
+  gameDate: "",
   currentPitcherName: "",
   currentAtBatName: "",
+  currentPitcher: {},
+  currentBatter: {},
   currentInning: 1,
   currentOutCount: 0,
   location: "",
@@ -38,6 +41,7 @@ const gameReducer = function(state = initialState, action) {
         homeTeam: action.gameInfo.homeTeam,
         awayTeam: action.gameInfo.awayTeam,
         gameID: action.gameID,
+        gameDate: action.gameInfo.date,
         teamsSelected: true
       });
 
@@ -58,8 +62,10 @@ const gameReducer = function(state = initialState, action) {
     case constants.actionTypes.SELECT_PLAYERS:
       // console.log( "inside gamereducer... pitcher name: " + action.player1 )
       return Object.assign({}, state, {
-        currentPitcherName: action.pitcher,
-        currentAtBatName: action.batter,
+        currentPitcherName: action.pitcherName,
+        currentAtBatName: action.batterName,
+        currentPitcher: action.pitcherObject,
+        currentBatter: action.batterObject,
         viewState: constants.viewStates.RECORD_GAME_VIEW
       });
 

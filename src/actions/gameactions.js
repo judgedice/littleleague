@@ -38,12 +38,14 @@ export function selectTeamsSuccess( gameID, gameInfo, message )
   }
 } 
 
-export function selectPlayersSuccess( pitcher, batter, message ) {
+export function selectPlayersSuccess( pitcherName, batterName, pitcherObject, batterObject, message ) {
 
   return {
     type: constants.actionTypes.SELECT_PLAYERS,
-    pitcher,
-    batter,
+    pitcherName,
+    batterName,
+    pitcherObject,
+    batterObject,
     message    
   }
   

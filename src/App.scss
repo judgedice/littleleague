@@ -1,6 +1,5 @@
-@import 'settings';
-@import 'foundation.scss';
- 
+@import "settings";
+@import "foundation.scss";
 
 @include foundation-global-styles;
 @include foundation-xy-grid-classes;
@@ -43,14 +42,15 @@
 @include foundation-visibility-classes;
 @include foundation-float-classes;
 
-body { overflow: hidden; }
+body {
+  overflow: hidden;
+}
 
 .Collapsible {
   background-color: map-get($foundation-palette, primary);
   color: $white;
   font-weight: 500;
   padding: 5px 0 5px 20px;
-
 }
 
 .Collapsible__trigger {
@@ -59,16 +59,15 @@ body { overflow: hidden; }
   width: 100%;
 }
 
-
 .App {
   text-align: center;
 }
 
-.App-logo { 
+.App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
- 
+
 .App-header {
   background-color: #222;
   height: 150px;
@@ -81,16 +80,18 @@ body { overflow: hidden; }
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
 
 /* FOUNDATION OVERRIDES */
 
-
 html {
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 300;
   margin: 5px 10px;
   color: $primary-color;
@@ -98,21 +99,21 @@ html {
 h1,
 h2,
 h3 {
-font-family: 'Contrail One', sans-serif;
+  font-family: "Contrail One", sans-serif;
 }
 
 h4,
 h5,
 h6 {
-  font-family: 'Hind Siliguri', sans-serif;
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 500;
 }
 
-p, span {
-  font-family: 'Hind Siliguri', sans-serif;
+p,
+span {
+  font-family: "Hind Siliguri", sans-serif;
   font-weight: 300;
 }
-
 
 /* END FOUNDATION OVERRIDES */
 
@@ -136,7 +137,7 @@ p, span {
 
 /* MEGA HACK BECAUSE I COULD NOT GET FUCKING FOUNDATION TO ALIGN THIS THING VERTICALLY! */
 
-.vertical-middle { 
+.vertical-middle {
   position: relative;
   top: 50%;
   transform: translateY(-50%);
@@ -150,45 +151,40 @@ SO THIS RULE MAY GO AWAY */
   margin-right: auto !important;
 }
 
-
-
 .addPlayerModal {
-
-      box-shadow: 3px 2px 20px 0px #666;
-    position: absolute;
-    top: 20px;
-    left: 5%;
-    padding: 20px;
-    background: white;
+  box-shadow: 3px 2px 20px 0px #666;
+  position: absolute;
+  top: 20px;
+  left: 5%;
+  padding: 20px;
+  background: white;
 }
-
 
 /* FORM STYLES */
 
 .action-button {
-    font-family: 'Contrail One', sans-serif !important;
-    font-size: 1.3rem;
+  font-family: "Contrail One", sans-serif !important;
+  font-size: 1.3rem;
 }
 
 .form-floating-label {
   position: relative;
-  
 }
 
-.form-floating-label [type='text'],
-.form-floating-label [type='password'],
-.form-floating-label [type='date'],
-.form-floating-label [type='datetime'],
-.form-floating-label [type='datetime-local'],
-.form-floating-label [type='month'],
-.form-floating-label [type='week'],
-.form-floating-label [type='email'],
-.form-floating-label [type='number'],
-.form-floating-label [type='search'],
-.form-floating-label [type='tel'],
-.form-floating-label [type='time'],
-.form-floating-label [type='url'],
-.form-floating-label [type='color'],
+.form-floating-label [type="text"],
+.form-floating-label [type="password"],
+.form-floating-label [type="date"],
+.form-floating-label [type="datetime"],
+.form-floating-label [type="datetime-local"],
+.form-floating-label [type="month"],
+.form-floating-label [type="week"],
+.form-floating-label [type="email"],
+.form-floating-label [type="number"],
+.form-floating-label [type="search"],
+.form-floating-label [type="tel"],
+.form-floating-label [type="time"],
+.form-floating-label [type="url"],
+.form-floating-label [type="color"],
 .form-floating-label textarea {
   margin-bottom: 0;
   color: #000;
@@ -235,14 +231,46 @@ SO THIS RULE MAY GO AWAY */
 
 .pitcher-row {
   height: 57px;
-  padding-top: .7rem;
-  font-family: 'Contrail One', serif;
+  padding-top: 0.7rem;
+  font-family: $header-font-family;
   font-size: 1.5rem;
   background: gold;
-
 }
 
 .pitcher-counts {
+  text-align: center;
+}
 
+.pitcher-stat p {
+  font-family: $header-font-family;
+  font-size: 1.3rem;
+}
 
+.pitcher-stat.total p {
+  font-size: 2.3rem;
+}
+
+/* HACK TOWN HERE.. WOULD LIKE TO IMPROVE ON THIS */
+.count-button {
+  border-radius: 50%;
+  background: #4679bd;
+  box-shadow: 0 0 5px gray;
+  width: 150px;
+  height: 160px;
+}
+
+.pitcher-count-buttons {
+  position: relative;
+  top: 30px;
+  height: 75%;
+}
+
+.batter-row {
+  height: 55px;
+  font-family: $header-font-family;
+  font-size: 1.4rem;
+  color: white;
+  background-color: $dark-gray;
+  padding: 10px 0;
+  margin-bottom: 8px;
 }
