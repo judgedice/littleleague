@@ -444,10 +444,10 @@ body {
   margin: 0;
   padding: 0;
   background: #fefefe;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Hind Siliguri", Roboto, Arial, sans-serif;
   font-weight: normal;
   line-height: 1.5;
-  color: #0a0a0a;
+  color: #0C2340;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
@@ -1786,7 +1786,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "Hind Siliguri", Roboto, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   color: inherit;
@@ -1801,7 +1801,7 @@ h6 {
     color: #cacaca; }
 
 h1 {
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 0.5rem; }
@@ -1813,25 +1813,25 @@ h2 {
   margin-bottom: 0.5rem; }
 
 h3 {
-  font-size: 1.1875rem;
+  font-size: 1rem;
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 0.5rem; }
 
 h4 {
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 0.5rem; }
 
 h5 {
-  font-size: 1.0625rem;
+  font-size: 0.875rem;
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 0.5rem; }
 
 h6 {
-  font-size: 1rem;
+  font-size: 0.75rem;
   line-height: 1.4;
   margin-top: 0;
   margin-bottom: 0.5rem; }
@@ -1842,7 +1842,7 @@ h6 {
   h2 {
     font-size: 2.5rem; }
   h3 {
-    font-size: 1.9375rem; }
+    font-size: 1.75rem; }
   h4 {
     font-size: 1.5625rem; }
   h5 {
@@ -1940,7 +1940,7 @@ kbd {
   margin-bottom: 0.5rem;
   font-weight: normal;
   line-height: 1.4;
-  color: #8a8a8a; }
+  color: #143a6b; }
 
 .lead {
   font-size: 125%;
@@ -2564,7 +2564,7 @@ select {
   border: 1px solid #A2AAAD;
   border-bottom: 0;
   background-color: #fefefe;
-  color: #0a0a0a; }
+  color: #0C2340; }
   :last-child > .accordion-content:last-child {
     border-bottom: 1px solid #A2AAAD; }
 
@@ -2795,26 +2795,26 @@ select {
   border: 1px solid rgba(10, 10, 10, 0.25);
   border-radius: 0;
   background-color: white;
-  color: #0a0a0a; }
+  color: #0C2340; }
   .callout > :first-child {
     margin-top: 0; }
   .callout > :last-child {
     margin-bottom: 0; }
   .callout.primary {
     background-color: #c8dcf5;
-    color: #0a0a0a; }
+    color: #0C2340; }
   .callout.secondary {
     background-color: #fcd6dc;
-    color: #0a0a0a; }
+    color: #0C2340; }
   .callout.success {
     background-color: #e1faea;
-    color: #0a0a0a; }
+    color: #0C2340; }
   .callout.warning {
     background-color: #fff3d9;
-    color: #0a0a0a; }
+    color: #0C2340; }
   .callout.alert {
     background-color: #f7e4e1;
-    color: #0a0a0a; }
+    color: #0C2340; }
   .callout.small {
     padding-top: 0.5rem;
     padding-right: 0.5rem;
@@ -2836,7 +2836,7 @@ select {
   background: #fefefe;
   box-shadow: none;
   overflow: hidden;
-  color: #0a0a0a; }
+  color: #0C2340; }
   .card > :last-child {
     margin-bottom: 0; }
 
@@ -4239,10 +4239,10 @@ table {
     font-weight: bold; }
   thead {
     background: #f8f8f8;
-    color: #0a0a0a; }
+    color: #0C2340; }
   tfoot {
     background: #f1f1f1;
-    color: #0a0a0a; }
+    color: #0C2340; }
   thead tr, tfoot tr {
     background: transparent; }
   thead th, thead td, tfoot th, tfoot td {
@@ -4344,7 +4344,7 @@ table.hover:not(.unstriped) tr:nth-of-type(even):hover {
   border: 1px solid #A2AAAD;
   border-top: 0;
   background: #fefefe;
-  color: #0a0a0a;
+  color: #0C2340;
   transition: all 0.5s ease; }
 
 .tabs-content.vertical {
@@ -4649,6 +4649,9 @@ a.thumbnail {
 .clearfix::after {
   clear: both; }
 
+body {
+  overflow: hidden; }
+
 .Collapsible {
   background-color: #0C2340;
   color: #fefefe;
@@ -4685,12 +4688,14 @@ a.thumbnail {
 /* FOUNDATION OVERRIDES */
 html {
   font-family: 'Hind Siliguri', sans-serif;
-  font-weight: 300; }
+  font-weight: 300;
+  margin: 5px 10px;
+  color: #0C2340; }
 
 h1,
 h2,
 h3 {
-  font-family: 'Contrail One', cursive; }
+  font-family: 'Contrail One', sans-serif; }
 
 h4,
 h5,
@@ -4708,15 +4713,21 @@ p, span {
   border: solid 1px red; }
 
 /* UTILITY CLASSES */
-/* SET HEIGHT OF COMPONENT */
+/* SET HEIGHT OF COMPONENT .... THIS MIGHT NEED TO CHANGE */
 .h125 {
   max-height: 125px; }
 
 .noborder {
   border: none !important; }
 
+/* MEGA HACK BECAUSE I COULD NOT GET FUCKING FOUNDATION TO ALIGN THIS THING VERTICALLY! */
+.vertical-middle {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+
 /* NOT SURE WHY WE HAVE TO BE SO INSISTENT HERE...
-I READ THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
+SUPPOSEDLY THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
 SO THIS RULE MAY GO AWAY */
 .align-center {
   margin-left: auto !important;
@@ -4731,6 +4742,10 @@ SO THIS RULE MAY GO AWAY */
   background: white; }
 
 /* FORM STYLES */
+.action-button {
+  font-family: 'Contrail One', sans-serif !important;
+  font-size: 1.3rem; }
+
 .form-floating-label {
   position: relative; }
 
@@ -4784,3 +4799,11 @@ SO THIS RULE MAY GO AWAY */
   font-size: 14px;
   color: dodgerblue;
   font-weight: 400; }
+
+/* UNIQUE CONTAINERS  */
+.pitcher-row {
+  height: 57px;
+  padding-top: .7rem;
+  font-family: 'Contrail One', serif;
+  font-size: 1.5rem;
+  background: gold; }

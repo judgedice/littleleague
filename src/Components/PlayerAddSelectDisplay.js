@@ -23,53 +23,38 @@ class PlayerAddSelectDisplay extends React.Component {
     this.state = {
       showAddPlayer: false,
       viewState: PLAYER_SELECT_VIEW,
-      teams: [],
       players: [],
-      currentTeamID: 0,
-      currentTeamName: "",
+      currentTeam: {},
       currentPlayer: {},
       quickRecord: "false" // IF THIS VIEW IS IN "QUICK RECORD MODE, THEN JUST STORE PLAYERS LOCALLY, NO TEAMS"
     };
 
     this.handleChangePlayerClick = this.handleChangePlayerClick.bind(this);
-    // this.searchTeams = this.searchTeams.bind(this)
-    // this.allTeamsResults = this.allTeamsResults.bind(this)
-    // this.allPlayersResults = this.allPlayersResults.bind(this)
-    // this.handleTeamSelection = this.handleTeamSelection.bind(this)
-    // this.searchPlayersByCurrentTeam = this.searchPlayersByCurrentTeam.bind(this)
     this.handlePlayerSelect = this.handlePlayerSelect.bind(this);
     this.setParentState = this.setParentState.bind(this);
     this.handlePlayerAdded = this.handlePlayerAdded.bind(this);
     this.storeListener = this.storeListener.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    // WHEN COMPONENT RENDERS, GET THE PLAYERS BY TEAM FROM ALGOLIA:
+    // TODO: MAKE THIS OFFLINE FIRST. IF PLAYERS ARE IN STORE ALREADY
+    // THEN USE THAT LIST INSTEAD OF CALLING SERVICE
     api.getPlayersByTeam(this.props.team.objectID);
+    // SUBSCRIBE TO THE REDUX STORE
     store.subscribe(this.storeListener);
   }
 
   storeListener() {
-    if (this.props.team.players !== []) {
+    // ONCE THE PLAYERS PROPERTY OF THE TEAM OBJECT IS SET, ADD IT TO THE STATE OF THIS COMPONENT
+    if (this.props.team.players !== undefined ) {
       this.setState({ players: this.props.team.players });
     }
   }
 
-  // REMOVE THIS AND CALL THE ALGOLIA METHODS SO THE TEAM PLAYERS CAN LIVE IN STATES
-  // sealayersByCurrentTeam( teamID ) {
-  //     var index = client.initIndex('little_league_players');
-  //     var filterString = `('playerTeamID':${teamID} )`
-  //     index.search("", {
-  //         "hitsPerPage": "100",
-  //         "filters": filterString,
-  //         "attributesToRetrieve": ["playerFirstName", "playerLastName", "isPitcher", "playerAge", "objectID"]
-  //         //"facets": "[]"
-  //     }, this.allPlayersResults)
-
-  // }
-
   setParentState() {
     this.props.selectPlayer(this.state.currentPlayer); // PARENT: GAMEVIEW
-    this.setState({ viewState: PLAYER_DISPLAY_VIEW });
+    // this.setState({ viewState: PLAYER_DISPLAY_VIEW });
   }
 
   handlePlayerAdded(props, content) {
@@ -109,7 +94,7 @@ class PlayerAddSelectDisplay extends React.Component {
     if (this.state.viewState === PLAYER_DISPLAY_VIEW) {
       // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
       return (
-        <div>
+        <div className="cell small-4 medium-4 large-4">
           <h3>
             {this.state.currentPlayer.playerFirstName +
               " " +
@@ -124,12 +109,12 @@ class PlayerAddSelectDisplay extends React.Component {
           <span>{this.state.currentTeamName}</span>
         </div>
       );
-    } else if (this.props.team) {
+    } else if (this.props.team ) {
       // CHOOSE FROM LIST OF PLAYERS
       return (
-        <div>
+        <div className="cell small-4 medium-4 large-4" >
           <label>
-            Select Player
+            Select First Player for {this.props.team.teamName}
             <select defaultValue="default" onChange={this.handlePlayerSelect}>
               <option disabled value="default">
                 {" "}
@@ -170,27 +155,3 @@ const mapStateToProps = function(store) {
 };
 
 export default connect(mapStateToProps)(PlayerAddSelectDisplay);
-
-// export default PlayerAddSelectDisplay
-
-// THIS IS FROM WHEN THIS COMPONENT HANDLED THE TEAM LOOKUP TOO, DOESN'T ANYMORE
-
-// else if (this.state.viewState === PITCHER_TEAM_SELECT_VIEW) { // NEED TO SELECT THE PITCHER
-
-//      if (this.state.currentTeamName !== "") {
-//          this.searchPlayersByCurrentTeam( this.state.currentTeamID )
-//          return (<div> GETTING PITCHERS...</div>)
-//      } else {
-//          return (<div>
-//              <label>Select Team:
-//                      <select defaultValue='default' onChange={this.handleTeamSelection}>
-//                      <option disabled value='default'> -- Teams... -- </option>
-//                      {this.state.teams.map((team, i) =>
-//                          <option key={i} label={team.teamName} value={team.objectID}>{team.teamName}</option>
-//                      )}
-
-//                  </select>
-//              </label>
-//          </div>
-//          )
-//      }

@@ -43,6 +43,8 @@
 @include foundation-visibility-classes;
 @include foundation-float-classes;
 
+body { overflow: hidden; }
+
 .Collapsible {
   background-color: map-get($foundation-palette, primary);
   color: $white;
@@ -90,11 +92,13 @@
 html {
   font-family: 'Hind Siliguri', sans-serif;
   font-weight: 300;
+  margin: 5px 10px;
+  color: $primary-color;
 }
 h1,
 h2,
 h3 {
-font-family: 'Contrail One', cursive;
+font-family: 'Contrail One', sans-serif;
 }
 
 h4,
@@ -120,7 +124,7 @@ p, span {
 
 /* UTILITY CLASSES */
 
-/* SET HEIGHT OF COMPONENT */
+/* SET HEIGHT OF COMPONENT .... THIS MIGHT NEED TO CHANGE */
 
 .h125 {
   max-height: 125px;
@@ -130,8 +134,16 @@ p, span {
   border: none !important;
 }
 
+/* MEGA HACK BECAUSE I COULD NOT GET FUCKING FOUNDATION TO ALIGN THIS THING VERTICALLY! */
+
+.vertical-middle { 
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* NOT SURE WHY WE HAVE TO BE SO INSISTENT HERE...
-I READ THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
+SUPPOSEDLY THE "CUSTOM" DOWNLOAD FOR FOUNDATION HAS THIS BUILT IN,
 SO THIS RULE MAY GO AWAY */
 .align-center {
   margin-left: auto !important;
@@ -152,6 +164,11 @@ SO THIS RULE MAY GO AWAY */
 
 
 /* FORM STYLES */
+
+.action-button {
+    font-family: 'Contrail One', sans-serif !important;
+    font-size: 1.3rem;
+}
 
 .form-floating-label {
   position: relative;
@@ -212,4 +229,20 @@ SO THIS RULE MAY GO AWAY */
   font-size: 14px;
   color: dodgerblue;
   font-weight: 400;
+}
+
+/* UNIQUE CONTAINERS  */
+
+.pitcher-row {
+  height: 57px;
+  padding-top: .7rem;
+  font-family: 'Contrail One', serif;
+  font-size: 1.5rem;
+  background: gold;
+
+}
+
+.pitcher-counts {
+
+
 }

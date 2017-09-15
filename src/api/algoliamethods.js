@@ -1,6 +1,10 @@
 import algoliasearch from "algoliasearch";
 import store from "../store";
-import { getTeamsSuccess, selectTeamsSuccess, getPlayersSuccess } from "../actions/gameactions";
+import {
+  getTeamsSuccess,
+  selectTeamsSuccess,
+  getPlayersSuccess
+} from "../actions/gameactions";
 
 // ALGOLIA SETUP ... NEED TO ELIMINATE THIS API KEY AS IT IS PUBLISHED AND ADMIN
 const client = algoliasearch("M008EL2TS7", "2f534330dc6a3ee61e2a3b7a0c5b26fe");
@@ -24,27 +28,71 @@ export function searchTeams() {
   // return (<div>getting teams</div>)
 }
 
-export function getPlayersByTeam( teamID )
-{
-    var index = client.initIndex('little_league_players');
-    var filterString = `('playerTeamID':${teamID} )`
-    index.search("", {
-        "hitsPerPage": "100",
-        "filters": filterString,
-        "attributesToRetrieve": ["playerFirstName", "playerLastName", "isPitcher", "playerAge", "objectID"]
-        //"facets": "[]"
-    }).then(response => {
-      store.dispatch( getPlayersSuccess( teamID, response.hits, "Players have been returned from the service" ) );
-
-})
+export function getPlayersByTeam(teamID) {
+  var index = client.initIndex("little_league_players");
+  var filterString = `('playerTeamID':${teamID} )`;
+  index
+    .search("", {
+      hitsPerPage: "100",
+      filters: filterString,
+      attributesToRetrieve: [
+        "playerFirstName",
+        "playerLastName",
+        "isPitcher",
+        "playerAge",
+        "objectID"
+      ]
+      //"facets": "[]"
+    })
+    .then(response => {
+      store.dispatch(
+        getPlayersSuccess(
+          teamID,
+          response.hits,
+          "Players have been returned from the service"
+        )
+      );
+    });
 }
 
-export function addNewGameData(gameObject) {
+export function updateAddGameData(gameObject) {
   var index = client.initIndex("little_league_games");
   // TODO... MOVE THIS API CALL TO THE SERVER TO HIDE THE ADMIN API FROM ALGOLIA
 
-  index.addObject(
-    gameObject ).then( response => {
-        store.dispatch( selectTeamsSuccess( response.objectID, gameObject, "Game Saved to Cloud" ))
-    });
+  // TRANSLATING FULL GAME OBJECT TO JUST STORE ID'S IN ALGOLIA
+  var tempObject = {
+    homeTeam: gameObject.homeTeam.objectID,
+    awayTeam: gameObject.awayTeam.objectID,
+    location: gameObject.location,
+    date: gameObject.date
+  };
+
+  var tempStore = store.getState();
+  
+  var sendMessage = response => {
+    store.dispatch(
+      selectTeamsSuccess(response.objectID, gameObject, "Game Saved to Cloud")
+    );
+  };
+
+  if (tempStore.gameState.gameID !== 0) {
+    
+    index.saveObject({
+        homeTeam: gameObject.homeTeam.objectID,
+        awayTeam: gameObject.awayTeam.objectID,
+        location: gameObject.location,
+        date: gameObject.date,
+        objectID: tempStore.gameState.gameID
+      })
+      .then(response => {
+        sendMessage(response);
+      });
+    return;
+  }
+
+  index.addObject(tempObject).then(response => {
+    sendMessage(response);
+  });
+
+
 }

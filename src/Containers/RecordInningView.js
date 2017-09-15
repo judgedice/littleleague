@@ -112,7 +112,7 @@ class RecordInningView extends Component {
     var newPitchArray = this.state.pitchesThisInning;
     newPitchArray.push(this.state.pitchInQueue);
     var index = client.initIndex("little_league_stats");
-   // MOVE THIS TO ALGOLIA METHODS
+    // MOVE THIS TO ALGOLIA METHODS
     index.addObjects(
       newPitchArray,
       function() {
@@ -193,19 +193,25 @@ class RecordInningView extends Component {
     // IMPLEMENT END-INNING
     return (
       <div className="grid-container">
-        <div className="grid-x cell">
-          <span className="cell">Inning: 1 Outs:1</span>
-          <span className="cell">Pitcher: { this.props.storeState.currentPitcherName } </span>
+        <div className="grid-x cell text-center">
+          <span className="cell small-12 medium-12 large-12 font-italic">
+            Inning: 1 Outs:1
+          </span>
+          <span className="cell pitcher-row">
+            Pitcher: {this.props.storeState.currentPitcherName}{" "}
+          </span>
         </div>
 
         <div className="grid-x cell small-12 align-center pitcher-counts">
           <div className="cell small-4">{this.countStrikes()} Strikes</div>
           <div className="cell small-4">{this.countTotal()} Total</div>
           <div className="cell small-4">{this.countBalls()} Balls</div>
+          <PitchCounter addNewPitch={this.addNewPitch} />
         </div>
 
-        <PitchCounter addNewPitch={this.addNewPitch} />
-        <div className="cell">Batter: { this.props.storeState.currentAtBatName }</div>
+        <div className="cell">
+          Batter: {this.props.storeState.currentAtBatName}
+        </div>
         <AtBatResult endInning={this.endInning} />
       </div>
     );

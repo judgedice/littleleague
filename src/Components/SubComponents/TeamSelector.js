@@ -2,9 +2,9 @@ import React from "react";
 
 const TeamSelector = props => {
   return (
-    <div className="cell">
+    <div id="TeamSelector" className="cell">
       <label>
-        Select Team:
+        Select {props.teamLabel} Team:
         <select id={props.team} defaultValue='default' onChange={props.handleTeamSelection}>
           <option disabled value='default'>
             {" "}-- Teams... --{" "}

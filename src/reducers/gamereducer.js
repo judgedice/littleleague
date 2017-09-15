@@ -15,6 +15,7 @@ const initialState = {
     players: []
   },
   teams: [],
+  
   gameID: 0,
   currentPitcherName: "",
   currentAtBatName: "",
@@ -22,40 +23,43 @@ const initialState = {
   currentOutCount: 0,
   location: "",
   teamsSelected: false,
-  viewState: "SELECT_LOCATION_TEAMS_VIEW"
+  viewState: constants.viewStates.SETUP_GAME_VIEW
 };
 
 const gameReducer = function(state = initialState, action) {
-  // WORKS
   switch (action.type) {
     case constants.actionTypes.GET_TEAMS_SUCCESS:
       // console.log( "THIS REDUCER HAS GOTTEN THE MESSAGE ....")
       return Object.assign({}, state, { teams: action.teams });
+
+
     case constants.actionTypes.SELECT_TEAMS:
       return Object.assign({}, state, {
         homeTeam: action.gameInfo.homeTeam,
         awayTeam: action.gameInfo.awayTeam,
-        gameID: action.gameID, 
-        teamsSelected: true,
-        viewState: constants.viewStates.SELECT_PLAYERS_VIEW
+        gameID: action.gameID,
+        teamsSelected: true
       });
-      case constants.actionTypes.GET_PLAYERS_SUCCESS: // LIST OF PLAYERS BY TEAM RETRIEVED
-      // TODO... ALGOLIA SENDS "HIGHLIGHTED RESULTS", WHICH WE DON'T NEEED
-        var teamString = "";
-        if( action.teamID === state.homeTeam.objectID ) teamString = "homeTeam"
-          else teamString = "awayTeam"
-        var tempTeamObject = state[teamString];
-        tempTeamObject.players = action.players;
-        return Object.assign({}, state, {
-          [teamString]:tempTeamObject
-          //viewState: constants.viewStates.RECORD_GAME_VIEW // DON'T CHANGE VIEWSTATE JUST YET
-        })
 
-      case constants.actionTypes.SELECT_PLAYERS:
+
+    case constants.actionTypes.GET_PLAYERS_SUCCESS: // LIST OF PLAYERS BY TEAM RETRIEVED
+      // TODO... ALGOLIA SENDS "HIGHLIGHTED RESULTS", WHICH WE DON'T NEEED
+      var teamString = "";
+      if (action.teamID === state.homeTeam.objectID) teamString = "homeTeam";
+      else teamString = "awayTeam";
+      var tempTeamObject = state[teamString];
+      tempTeamObject.players = action.players;
+      return Object.assign({}, state, {
+        [teamString]: tempTeamObject
+          //viewState: constants.viewStates.RECORD_GAME_VIEW // DON'T CHANGE VIEWSTATE JUST YET
+      });
+
+      
+    case constants.actionTypes.SELECT_PLAYERS:
       // console.log( "inside gamereducer... pitcher name: " + action.player1 )
       return Object.assign({}, state, {
-       currentPitcherName: action.pitcher,
-       currentAtBatName: action.batter,
+        currentPitcherName: action.pitcher,
+        currentAtBatName: action.batter,
         viewState: constants.viewStates.RECORD_GAME_VIEW
       });
 
