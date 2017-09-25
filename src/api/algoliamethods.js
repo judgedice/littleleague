@@ -2,8 +2,9 @@ import algoliasearch from "algoliasearch";
 import store from "../store";
 import {
   getTeamsSuccess,
-  selectTeamsSuccess,
-  getPlayersSuccess
+  selectTeams,
+  getPlayersSuccess, 
+  beginSearch
 } from "../actions/gameactions";
 
 // ALGOLIA SETUP ... NEED TO ELIMINATE THIS API KEY AS IT IS PUBLISHED AND ADMIN
@@ -13,6 +14,7 @@ export function searchTeams() {
   // if (this.state.teams.length) return; // TODO... DON'T CRASH APP IF THIS HAPPENS
   //this.setState( { viewState: "teamSelect" } )
   // console.log( "searching teams")
+  store.dispatch( beginSearch("teams", "Searching for Teams with Data Provider"));
   var index = client.initIndex("little_league_teams");
   index
     .search("", {
@@ -69,10 +71,13 @@ export function updateAddGameData(gameObject) {
 
   var tempStore = store.getState();
   
-  var sendMessage = response => {
+  var sendMessageAndGetPlayers = response => {
     store.dispatch(
-      selectTeamsSuccess(response.objectID, gameObject, "Game Saved to Cloud")
+      selectTeams(response.objectID, gameObject, "Game Saved to Cloud")
     );
+    getPlayersByTeam( gameObject.homeTeam.objectID );
+    getPlayersByTeam( gameObject.awayTeam.objectID );
+  
   };
 
   if (tempStore.gameState.gameID !== 0) {
@@ -85,13 +90,13 @@ export function updateAddGameData(gameObject) {
         objectID: tempStore.gameState.gameID
       })
       .then(response => {
-        sendMessage(response);
+        sendMessageAndGetPlayers(response);
       });
     return;
   }
   // NO GAME STORED YET, ADD ONE TO ALGOLIA 
   index.addObject(tempObject).then(response => {
-    sendMessage(response);
+    sendMessageAndGetPlayers(response);
   });
 
 

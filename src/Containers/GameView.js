@@ -3,14 +3,14 @@ import React, { Component } from "react";
 import { GameScore } from "../Components/SubComponents/GameScore";
 import Collapsible from "react-collapsible";
 import RecordInningView from "../Containers/RecordInningView";
-import LocationsTeamsSelector from "../Components/LocationsTeamsSelector";
-import PlayerAddSelectDisplay from "../Components/PlayerAddSelectDisplay";
-import store from "../store";
+import GameSetupRecord from "../Components/GameSetupRecord";
+// import PlayerAddSelectDisplay from "../Components/PlayerAddSelectDisplay";
+// import store from "../store";
 // import { selectTeamsSuccess } from "../actions/gameactions";
-import * as api from "../api/algoliamethods";
+// import * as api from "../api/algoliamethods";
 import * as constants from "../constants";
 import { connect } from "react-redux";
-import { selectPlayersSuccess } from "../actions/gameactions";
+// import { selectPlayers } from "../actions/gameactions";
 
 class GameView extends Component {
   constructor(props) {
@@ -28,8 +28,6 @@ class GameView extends Component {
         objectID: 0,
         currentScore: 0
       },
-      currentPitcherName: "",
-      currentAtBatName: "",
       currentInning: 1,
       currentOutCount: 0,
       location: "",
@@ -65,14 +63,14 @@ class GameView extends Component {
           break;
         case constants.viewStates.RECORD_GAME_VIEW:
           return (
-              <RecordInningView />
+              ""
           );
         case constants.viewStates.DEFAULT_GAME_VIEW:
           return (
             <div className="cell">
               <div className="cell callout small-10 align-center text-center">
                 <span className="cell">
-                  Now Pitching: {this.state.currentPitcherName}
+                  Now Pitching: { /* this.state.currentPitcherName*/ }
                 </span>
               </div>
               <GameScore
@@ -112,12 +110,11 @@ class GameView extends Component {
       }
     }
 
-    // NEED TO CHANGE LOCATIONS TEAM SELECTOR TO "GAMEHEADERANDSETUP"
     return (
       <div id="GameView" className="grid-y grid-frame">
-        <LocationsTeamsSelector
-        />
+        <GameSetupRecord >
         { showView() }
+        </GameSetupRecord>
       </div>
     );
 

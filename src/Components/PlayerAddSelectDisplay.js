@@ -23,7 +23,6 @@ class PlayerAddSelectDisplay extends React.Component {
     this.state = {
       showAddPlayer: false,
       viewState: PLAYER_SELECT_VIEW,
-      players: [],
       currentTeam: {},
       currentPlayer: {},
       quickRecord: "false" // IF THIS VIEW IS IN "QUICK RECORD MODE, THEN JUST STORE PLAYERS LOCALLY, NO TEAMS"
@@ -40,16 +39,16 @@ class PlayerAddSelectDisplay extends React.Component {
     // WHEN COMPONENT RENDERS, GET THE PLAYERS BY TEAM FROM ALGOLIA:
     // TODO: MAKE THIS OFFLINE FIRST. IF PLAYERS ARE IN STORE ALREADY
     // THEN USE THAT LIST INSTEAD OF CALLING SERVICE
-    api.getPlayersByTeam(this.props.team.objectID);
+    // api.getPlayersByTeam(this.props.team.objectID);
     // SUBSCRIBE TO THE REDUX STORE
-    store.subscribe(this.storeListener);
+    // store.subscribe(this.storeListener);
   }
 
   storeListener() {
     // ONCE THE PLAYERS PROPERTY OF THE TEAM OBJECT IS SET, ADD IT TO THE STATE OF THIS COMPONENT
-    if (this.props.team.players !== undefined ) {
-      this.setState({ players: this.props.team.players });
-    }
+    // if (this.props.team.players !== undefined ) {
+    //   this.setState({ players: this.props.team.players });
+    // }
   }
 
   setParentState() {
@@ -84,21 +83,21 @@ class PlayerAddSelectDisplay extends React.Component {
       // this.setState({ viewState: PLAYER_ADD_VIEW }) THIS IS ON PAUSE FOR NOW
       return;
     }
-    var playerObj = _.filter(this.state.players, { objectID: e.target.value });
+    var playerObj = _.filter(this.props.team.players, { objectID: e.target.value });
 
     // SETTING CURRENT PLAYER IN THIS COMPONENT SO IT DISPLAYS IT WHEN SELECTED
     this.setState({ currentPlayer: playerObj[0] }, this.setParentState);
   }
 
   render() {
-    if (this.state.viewState === PLAYER_DISPLAY_VIEW) {
+    if ( this.props.player ) {
       // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
       return (
-        <div className="cell small-4 medium-4 large-4">
+        <span className="">
           <h3>
-            {this.state.currentPlayer.playerFirstName +
+            {this.props.player.playerFirstName +
               " " +
-              this.state.currentPlayer.playerLastName}{" "}
+              this.props.player.playerLastName}{" "}
             <button
               className="button tiny success"
               onClick={this.handleChangePlayerClick}
@@ -106,21 +105,21 @@ class PlayerAddSelectDisplay extends React.Component {
               Change
             </button>{" "}
           </h3>
-          <span>{this.state.currentTeamName}</span>
-        </div>
+          <span>{this.props.team.teamName}</span>
+        </span>
       );
     } else if (this.props.team ) {
       // CHOOSE FROM LIST OF PLAYERS
       return (
         <div className="cell small-4 medium-4 large-4" >
           <label>
-            Select First Player for {this.props.team.teamName}
+            Select First Player for {this.props.team.teamName }
             <select defaultValue="default" onChange={this.handlePlayerSelect}>
               <option disabled value="default">
                 {" "}
                 -- Players... --{" "}
               </option>
-              {this.state.players.map((player, i) => (
+              {this.props.team.players.map((player, i) => (
                 <option key={i} value={player.objectID}>
                   {player.playerFirstName + " " + player.playerLastName}{" "}
                   {player.isPitcher ? "(P)" : ""}
@@ -135,23 +134,29 @@ class PlayerAddSelectDisplay extends React.Component {
       );
     } else if (this.state.viewState === PLAYER_ADD_VIEW) {
       return (
-        <div className="addPlayerModal">
-          <AddPlayer
-            teams={this.state.teams}
-            playerAdded={this.handlePlayerAdded}
-            teamName={this.state.currentTeamName1}
-            teamID={null}
-          />
-        </div>
+        ""
       );
     } else return <div>GETTING PLAYER ROSTERS BY TEAM!</div>;
   }
 }
 
-const mapStateToProps = function(store) {
-  return {
-    storeState: store.gameState
-  };
-};
+export default PlayerAddSelectDisplay;
 
-export default connect(mapStateToProps)(PlayerAddSelectDisplay);
+// const mapStateToProps = function(store) {
+//   return {
+//     storeState: store.gameState
+//   };
+// };
+
+// export default connect(mapStateToProps)(PlayerAddSelectDisplay);
+
+
+/// ADD PLAYER VIEW CODE, REMOVED FOR NOW:
+// <div className="addPlayerModal">
+        //   <AddPlayer
+        //     teams={this.state.teams}
+        //     playerAdded={this.handlePlayerAdded}
+        //     teamName={this.state.currentTeamName1}
+        //     teamID={null}
+        //   />
+        // </div>

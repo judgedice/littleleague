@@ -4810,7 +4810,8 @@ SO THIS RULE MAY GO AWAY */
   background: gold; }
 
 .pitcher-counts {
-  text-align: center; }
+  text-align: center;
+  height: 75px; }
 
 .pitcher-stat p {
   font-family: "Contrail One", sans-serif !important;
@@ -4820,17 +4821,22 @@ SO THIS RULE MAY GO AWAY */
   font-size: 2.3rem; }
 
 /* HACK TOWN HERE.. WOULD LIKE TO IMPROVE ON THIS */
+.pitch-count-buttons-container {
+  height: 100%; }
+
+.pitch-count-buttons {
+  position: relative;
+  top: 0px;
+  height: 75%; }
+
 .count-button {
   border-radius: 50%;
   background: #4679bd;
   box-shadow: 0 0 5px gray;
-  width: 150px;
-  height: 160px; }
-
-.pitcher-count-buttons {
-  position: relative;
-  top: 30px;
-  height: 75%; }
+  width: 150px !important;
+  height: 150px;
+  font-size: 34px;
+  font-family: "Contrail One", sans-serif !important; }
 
 .batter-row {
   height: 55px;

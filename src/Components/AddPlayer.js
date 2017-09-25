@@ -87,7 +87,7 @@ class AddPlayer extends Component {
     }
 
     render() {
-        console.log( this.props.teams )
+        // console.log( this.props.teams )
         var showTeam = {
             hasTeam:
             <div className="form-floating-label has-value">

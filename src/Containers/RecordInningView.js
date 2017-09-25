@@ -6,6 +6,7 @@ import algoliasearch from "algoliasearch";
 import AtBatResult from "../Components/AtBatResult";
 import store from "../store";
 import { connect } from "react-redux";
+import PlayerAddSelectDisplay from "../Components/PlayerAddSelectDisplay";
 
 const NEW_INNING_VIEW = "NEW_INNING_VIEW";
 const INNING_IN_PLAY_VIEW = "INNING_IN_PLAY_VIEW";
@@ -28,13 +29,17 @@ const client = algoliasearch("M008EL2TS7", "2f534330dc6a3ee61e2a3b7a0c5b26fe");
 class RecordInningView extends Component {
   constructor(props, context) {
     super(props, context);
-    this.endInning = this.endInning.bind(this);
+    this.endInning = this.endAtBat.bind(this);
     this.state = stateObject;
     // this.modifyPitch = this.modifyPitch.bind(this)
     this.addNewPitch = this.addNewPitch.bind(this);
     // this.handleSelectPitcher = this.handleSelectPitcher.bind(this);
 
     // this.handleSelectPitcher(this.props);
+  }
+
+  componentWillMount() {
+ 
   }
 
   // handleSelectPitcher(props) {
@@ -60,19 +65,15 @@ class RecordInningView extends Component {
   addNewPitch(e) {
     e.preventDefault();
     var statePitchArray = this.state.pitchesThisInning;
-    
-    // REMOVE PITCH
-    if (e.target.id === "remove")
-    {
 
+    // REMOVE PITCH
+    if (e.target.id === "remove") {
       // THERE'S NO PITCH IN QUEUE...
-      if( !this.state.pitchInQueue.gameDate )
-      {
+      if (!this.state.pitchInQueue.gameDate) {
         statePitchArray.pop();
-        this.setState( { pitchesThisInning: statePitchArray } )
-      }
-      else {
-        this.setState({pitchInQueue:{}});
+        this.setState({ pitchesThisInning: statePitchArray });
+      } else {
+        this.setState({ pitchInQueue: {} });
       }
       return;
     }
@@ -194,9 +195,14 @@ class RecordInningView extends Component {
     * 
     * @memberOf GameView
     */
-  endInning(e) {
+  endAtBat(e) {
     e.preventDefault();
-    console.log("endinginning! result: " + e.target.id);
+    // TODO:
+    // 1. CHANGE BATTERS
+    // 2. SAVE INNING DATA
+    // 3. THAT'S IT! DON'T FORGET OFFLINE FIRST!
+
+    // console.log("endinginning! result: " + e.target.id);
   }
 
   render() {
@@ -209,7 +215,11 @@ class RecordInningView extends Component {
             Inning: 1 Outs:1
           </span>
           <span className="cell pitcher-row">
-            Pitcher: {this.props.storeState.currentPitcherName}{" "}
+            Pitcher:{" "}
+            <PlayerAddSelectDisplay
+              player={this.props.storeState.currentPitcher}
+              team={this.props.storeState[this.props.storeState.teamInField]}
+            />
           </span>
         </div>
 
@@ -219,22 +229,25 @@ class RecordInningView extends Component {
               <p className="vertical-middle"> {this.countStrikes()} Strikes </p>
             </div>
             <div className="cell small-4 pitcher-stat total">
-            <p className="vertical-middle"> {this.countTotal()} Total</p>
+              <p className="vertical-middle"> {this.countTotal()} Total</p>
             </div>
             <div className="cell small-4 pitcher-stat">
-            <p className="vertical-middle"> {this.countBalls()} Balls</p>
+              <p className="vertical-middle"> {this.countBalls()} Balls</p>
             </div>
           </div>
 
-          <div className="grid-x cell small-12 align-center pitcher-count-buttons">
+          <div className="grid-x cell small-12 align-center pitch-count-buttons-container">
             <PitchCounter addNewPitch={this.addNewPitch} />
           </div>
         </div>
 
         <div className="cell text-center batter-row">
-          <p className="verticalMiddle">Batter: {this.props.storeState.currentAtBatName}</p>
+          <PlayerAddSelectDisplay
+            player={this.props.storeState.currentBatter}
+            team={this.props.storeState[this.props.storeState.teamAtBat]}
+          />
         </div>
-        <AtBatResult endInning={this.endInning} />
+        <AtBatResult endAtBat={this.endAtBat} />
       </div>
     );
   }

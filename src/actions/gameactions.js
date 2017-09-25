@@ -1,7 +1,7 @@
 
 import * as constants from '../constants'
 
-export function getTeamsSuccess( teams, message ) {
+export function getTeamsSuccess( teams, message = "Teams retrieved from Data Provider" ) {
   // WORKS
   return {
     type: constants.actionTypes.GET_TEAMS_SUCCESS,
@@ -28,7 +28,7 @@ export function beginSearch( searchType, message )
     }
 }
 
-export function selectTeamsSuccess( gameID, gameInfo, message )
+export function selectTeams( gameID, gameInfo, message )
 {
   return {
     type: constants.actionTypes.SELECT_TEAMS,
@@ -38,12 +38,10 @@ export function selectTeamsSuccess( gameID, gameInfo, message )
   }
 } 
 
-export function selectPlayersSuccess( pitcherName, batterName, pitcherObject, batterObject, message ) {
+export function selectPlayers( pitcherObject, batterObject, message ) {
 
   return {
     type: constants.actionTypes.SELECT_PLAYERS,
-    pitcherName,
-    batterName,
     pitcherObject,
     batterObject,
     message    

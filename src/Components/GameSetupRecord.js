@@ -6,13 +6,14 @@ import * as api from "../api/algoliamethods";
 import * as constants from "../constants";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { beginSearch, selectPlayersSuccess } from "../actions/gameactions";
+import {  selectPlayers } from "../actions/gameactions";
 import PlayerAddSelectDisplay from "./PlayerAddSelectDisplay";
+import RecordInningView from '../Containers/RecordInningView';
 
 // TODO: VERIFY HOW WE HANDLE TEAMS AS A STATE OF JUST THIS COMPONENT
 // IS THIS THE MOST EFFICIENT WAY?
 
-class LocationsTeamSelector extends Component {
+class GameSetupRecord extends Component {
   constructor(props) {
     super(props);
 
@@ -21,31 +22,30 @@ class LocationsTeamSelector extends Component {
       teamsSelected: false,
       showPlayers: false,
       location: "",
-      currentAtBatName: "",
-      currentPitcherName: "",
       currentPitcher: {},
       currentBatter: {},
       playersSelected: false,
       homeTeam: {
         teamName: "",
         objectID: 0,
-        currentScore: 0
+        currentScore: 0,
+        players: []
       },
       awayTeam: {
         teamName: "",
         objectID: 0,
-        currentScore: 0
+        currentScore: 0,
+        players: []
       }
     };
     this.handleTeamSelection = this.handleTeamSelection.bind(this);
-    this.handleLocationFieldChange = this.handleLocationFieldChange.bind(this);
+    // this.handleLocationFieldChange = this.handleLocationFieldChange.bind(this);
     this.setPlayerStates = this.setPlayerStates.bind(this);
     this.saveInitialGameData = this.saveInitialGameData.bind(this);
     this.setupComplete = this.setupComplete.bind(this);
   }
   componentDidMount() {
     api.searchTeams();
-    store.dispatch(beginSearch("teams", "Searching for Teams with Provider"));
   }
 
   // EVENT HANDLERS
@@ -94,21 +94,23 @@ class LocationsTeamSelector extends Component {
     if (prop.isPitcher) {
       this.setState(
         {
-          currentPitcherName: prop.playerFirstName + " " + prop.playerLastName, currentPitcher: prop
+          currentPitcher: prop
         },
         this.handlePlayersSet
       );
     } else
       this.setState(
-        { currentAtBatName: prop.playerFirstName + " " + prop.playerLastName, currentBatter: prop },
+        {
+          currentBatter: prop
+        },
         this.handlePlayersSet
       );
   }
 
   handlePlayersSet() {
     if (
-      this.state.currentAtBatName !== "" &&
-      this.state.currentPitcherName !== ""
+      this.state.currentBatter.playerFirstName &&
+      this.state.currentPitcher.playerFirstName
     ) {
       this.setState({ playersSelected: true });
     }
@@ -117,9 +119,7 @@ class LocationsTeamSelector extends Component {
   setupComplete() {
     // PITCHER FIRST, THEN BATTER, ALWAYS
     store.dispatch(
-      selectPlayersSuccess(
-        this.state.currentPitcherName,
-        this.state.currentAtBatName,
+      selectPlayers(
         this.state.currentPitcher,
         this.state.currentBatter,
         "Players Selected, PLAY BALL!"
@@ -129,7 +129,7 @@ class LocationsTeamSelector extends Component {
     // console.log("players are set ");
   }
 
-  handleLocationFieldChange(e) {
+  handleLocationFieldChange = (e) => {
     // MIGHT HAVE A RACE CASE HERE... IF USER SELECTS PLAYERS REAL FAST AND CLICKS GO
     this.setState({ location: e.target.value }, this.handleTeamStateSetting);
   }
@@ -167,7 +167,7 @@ class LocationsTeamSelector extends Component {
     };
 
     const showView = () => {
-      switch ( this.props.storeState.viewState) {
+      switch (this.props.storeState.viewState) {
         case constants.viewStates.SETUP_GAME_VIEW:
           return (
             <div
@@ -215,19 +215,27 @@ class LocationsTeamSelector extends Component {
                   id="jsxPlayerSelect"
                   className="cell grid-x small-12 medium-12 large-12"
                 >
-                  <PlayerAddSelectDisplay
-                    team={this.state.homeTeam}
-                    selectPlayer={this.setPlayerStates}
-                  />
+                  {this.props.storeState.homeTeam.players ? (
+                    <PlayerAddSelectDisplay
+                      team={this.state.homeTeam}
+                      selectPlayer={this.setPlayerStates}
+                    />
+                  ) : (
+                    "Getting Players for the home team..."
+                  )}
                   <div className="auto cell">
                     <h3 className="text-center subheader vertical-middle">
                       vs
                     </h3>
                   </div>
-                  <PlayerAddSelectDisplay
-                    team={this.state.awayTeam}
-                    selectPlayer={this.setPlayerStates}
-                  />
+                  {this.props.storeState.awayTeam.players ? (
+                    <PlayerAddSelectDisplay
+                      team={this.state.awayTeam }
+                      selectPlayer={this.setPlayerStates}
+                    />
+                  ) : (
+                    "Getting Players for the away team..."
+                  )}
                 </div>
               ) : (
                 ""
@@ -244,13 +252,16 @@ class LocationsTeamSelector extends Component {
             </div>
           );
         case constants.viewStates.RECORD_GAME_VIEW:
+          return ( <RecordInningView /> );
+        default:
           return "";
       }
     };
 
     return (
-      <div id="LocationsTeamsSelector" className="cell grid-x fluid">
+      <div id="GameSetupRecord" className="cell grid-x grid-y auto">
         <GameHeader />
+        {this.props.children}
         {showView()}
       </div>
     );
@@ -263,4 +274,4 @@ const mapStateToProps = function(store) {
   };
 };
 
-export default connect(mapStateToProps)(LocationsTeamSelector);
+export default connect(mapStateToProps)(GameSetupRecord);

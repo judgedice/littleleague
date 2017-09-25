@@ -239,6 +239,7 @@ SO THIS RULE MAY GO AWAY */
 
 .pitcher-counts {
   text-align: center;
+  height: 75px; 
 }
 
 .pitcher-stat p {
@@ -251,18 +252,25 @@ SO THIS RULE MAY GO AWAY */
 }
 
 /* HACK TOWN HERE.. WOULD LIKE TO IMPROVE ON THIS */
+
+.pitch-count-buttons-container {
+  height: 100%; 
+}
+
+
+.pitch-count-buttons {
+  position: relative;
+  top: 0px;
+  height: 75%;
+}
 .count-button {
   border-radius: 50%;
   background: #4679bd;
   box-shadow: 0 0 5px gray;
-  width: 150px;
-  height: 160px;
-}
-
-.pitcher-count-buttons {
-  position: relative;
-  top: 30px;
-  height: 75%;
+  width: 150px !important;
+  height: 150px;
+  font-size: 34px;
+  font-family: $header-font-family;
 }
 
 .batter-row {

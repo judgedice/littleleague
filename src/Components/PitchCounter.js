@@ -23,11 +23,11 @@ class PitchCounter extends React.Component {
 
     render() {
         return (
-            <div id="PitchCounter" className="small-12 medium-12 large-12 grid-x grid-y pitcher-count-buttons">
+            <div id="PitchCounter" className="small-12 medium-12 large-12 grid-x grid-y pitch-count-buttons">
                
-                    <div className="cell auto grid-x grid-margin-x">
+                    <div className="cell align-center auto grid-x grid-margin-x">
                         <button id="ball" className="button cell small-6 count-button" onClick={this.props.addNewPitch} >Ball</button>
-                        <button id="strike" className="button cell small-6 count-button" onClick={this.props.addNewPitch} >Strike</button>
+                        <button id="strike" className="button cell  small-6 count-button" onClick={this.props.addNewPitch} >Strike</button>
                     </div>
                     <div className="grid-x grid-margin-x text-center cell">
                         <button id="remove" className="button cell secondary" onClick={this.props.addNewPitch}>Remove Pitch</button>                      
