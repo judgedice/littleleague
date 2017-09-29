@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 
 const PLAYER_DISPLAY_VIEW = "PITCHER_DISPLAY_VIEW";
 const PLAYER_SELECT_VIEW = "PITCHER_SELECT_VIEW";
-// const PITCHER_TEAM_SELECT_VIEW = "PITCHER_TEAM_SELECT_VIEW"
 const PLAYER_ADD_VIEW = "PLAYER_ADD_VIEW";
 
 // ALGOLIA SETUP ... NEED TO ELIMINATE THIS API KEY AS IT IS PUBLISHED AND ADMIN
@@ -42,6 +41,8 @@ class PlayerAddSelectDisplay extends React.Component {
     // api.getPlayersByTeam(this.props.team.objectID);
     // SUBSCRIBE TO THE REDUX STORE
     // store.subscribe(this.storeListener);
+    if(this.props.player)
+      this.setState( { viewState:PLAYER_DISPLAY_VIEW} )
   }
 
   storeListener() {
@@ -53,7 +54,8 @@ class PlayerAddSelectDisplay extends React.Component {
 
   setParentState() {
     this.props.selectPlayer(this.state.currentPlayer); // PARENT: GAMEVIEW
-    // this.setState({ viewState: PLAYER_DISPLAY_VIEW });
+    
+    this.setState({ viewState: PLAYER_DISPLAY_VIEW });
   }
 
   handlePlayerAdded(props, content) {
@@ -73,7 +75,7 @@ class PlayerAddSelectDisplay extends React.Component {
   handleChangePlayerClick(e) {
     // CLICKING THE 'CHANGE' BUTTON TRIGGERS THIS
     e.preventDefault();
-    //this.setState({ viewState: PITCHER_TEAM_SELECT_VIEW })
+    this.setState({ viewState: PLAYER_SELECT_VIEW })
   }
 
   handlePlayerSelect(e) {
@@ -83,45 +85,31 @@ class PlayerAddSelectDisplay extends React.Component {
       // this.setState({ viewState: PLAYER_ADD_VIEW }) THIS IS ON PAUSE FOR NOW
       return;
     }
-    var playerObj = _.filter(this.props.team.players, { objectID: e.target.value });
+    var playerObj = _.filter(this.props.team.players, {
+      objectID: e.target.value
+    });
 
     // SETTING CURRENT PLAYER IN THIS COMPONENT SO IT DISPLAYS IT WHEN SELECTED
     this.setState({ currentPlayer: playerObj[0] }, this.setParentState);
   }
 
   render() {
-    if ( this.props.player ) {
-      // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
-      return (
-        <span className="">
-          <h3>
-            {this.props.player.playerFirstName +
-              " " +
-              this.props.player.playerLastName}{" "}
-            <button
-              className="button tiny success"
-              onClick={this.handleChangePlayerClick}
-            >
-              Change
-            </button>{" "}
-          </h3>
-          <span>{this.props.team.teamName}</span>
-        </span>
-      );
-    } else if (this.props.team ) {
+    
+    if ( this.state.viewState === PLAYER_SELECT_VIEW) {
       // CHOOSE FROM LIST OF PLAYERS
+      if( this.props.team ){
       return (
-        <div className="cell small-4 medium-4 large-4" >
+        <div className="cell small-4 medium-4 large-4">
           <label>
-            Select First Player for {this.props.team.teamName }
+            Select Player for {this.props.team.teamName}
             <select defaultValue="default" onChange={this.handlePlayerSelect}>
               <option disabled value="default">
-                {" "}
-                -- Players... --{" "}
+                
+                -- Players... --
               </option>
               {this.props.team.players.map((player, i) => (
                 <option key={i} value={player.objectID}>
-                  {player.playerFirstName + " " + player.playerLastName}{" "}
+                  {player.playerFirstName + " " + player.playerLastName}
                   {player.isPitcher ? "(P)" : ""}
                 </option>
               ))}
@@ -132,10 +120,23 @@ class PlayerAddSelectDisplay extends React.Component {
           </label>
         </div>
       );
-    } else if (this.state.viewState === PLAYER_ADD_VIEW) {
+    }
+    } else if ( this.state.viewState === PLAYER_DISPLAY_VIEW && this.props.player ) {
+      // SIMPLY DISPLAY THE PITCHER AND TEAM NAME
       return (
-        ""
+        <span className="player" >
+          <span className="playerType">{this.props.playerType}: </span>
+          <a href="javascript.void(0);" onClick={this.handleChangePlayerClick}>
+          {this.props.player.playerFirstName +
+            " " +
+            this.props.player.playerLastName}
+            </a>
+          <span className="playerTeamName"> ({this.props.team.teamName}) </span>
+        </span>
       );
+    }
+      else if (this.state.viewState === PLAYER_ADD_VIEW) {
+      return "";
     } else return <div>GETTING PLAYER ROSTERS BY TEAM!</div>;
   }
 }
@@ -150,13 +151,12 @@ export default PlayerAddSelectDisplay;
 
 // export default connect(mapStateToProps)(PlayerAddSelectDisplay);
 
-
 /// ADD PLAYER VIEW CODE, REMOVED FOR NOW:
 // <div className="addPlayerModal">
-        //   <AddPlayer
-        //     teams={this.state.teams}
-        //     playerAdded={this.handlePlayerAdded}
-        //     teamName={this.state.currentTeamName1}
-        //     teamID={null}
-        //   />
-        // </div>
+//   <AddPlayer
+//     teams={this.state.teams}
+//     playerAdded={this.handlePlayerAdded}
+//     teamName={this.state.currentTeamName1}
+//     teamID={null}
+//   />
+// </div>

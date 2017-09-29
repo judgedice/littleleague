@@ -4804,10 +4804,25 @@ SO THIS RULE MAY GO AWAY */
 /* UNIQUE CONTAINERS  */
 .pitcher-row {
   height: 57px;
-  padding-top: 0.7rem;
-  font-family: "Contrail One", sans-serif !important;
+  display: inherit;
+  font-family: "Hind Siliguri", Roboto, Arial, sans-serif;
   font-size: 1.5rem;
   background: gold; }
+
+.player {
+  font-family: "Contrail One", sans-serif !important;
+  font-size: 2.1rem;
+  margin: 0 auto; }
+
+.player .playerType {
+  /* FOR THE "PITCHER" AND "BATTER" LABELS */
+  font-family: "Hind Siliguri", Roboto, Arial, sans-serif;
+  font-size: 1.4rem; }
+
+.player .playerTeamName {
+  /* FOR THE TEAM NAME NEXT TO THE PLAYER DISPLAY*/
+  font-family: "Contrail One", sans-serif !important;
+  font-size: 1.5rem; }
 
 .pitcher-counts {
   text-align: center;
@@ -4844,5 +4859,4 @@ SO THIS RULE MAY GO AWAY */
   font-size: 1.4rem;
   color: white;
   background-color: #8a8a8a;
-  padding: 10px 0;
   margin-bottom: 8px; }

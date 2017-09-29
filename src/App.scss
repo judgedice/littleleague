@@ -231,10 +231,28 @@ SO THIS RULE MAY GO AWAY */
 
 .pitcher-row {
   height: 57px;
-  padding-top: 0.7rem;
-  font-family: $header-font-family;
+  display: inherit;
+  font-family: $body-font-family;
   font-size: 1.5rem;
   background: gold;
+}
+
+.player {
+  font-family: $header-font-family;
+  font-size: 2.1rem;
+  margin: 0 auto;
+}
+
+.player .playerType {
+  /* FOR THE "PITCHER" AND "BATTER" LABELS */
+  font-family: $body-font-family;
+  font-size: 1.4rem;
+}
+
+.player .playerTeamName {
+  /* FOR THE TEAM NAME NEXT TO THE PLAYER DISPLAY*/
+  font-family: $header-font-family;
+  font-size: 1.5rem;
 }
 
 .pitcher-counts {
@@ -279,6 +297,5 @@ SO THIS RULE MAY GO AWAY */
   font-size: 1.4rem;
   color: white;
   background-color: $dark-gray;
-  padding: 10px 0;
   margin-bottom: 8px;
 }

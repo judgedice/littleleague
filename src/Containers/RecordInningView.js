@@ -7,16 +7,14 @@ import AtBatResult from "../Components/AtBatResult";
 import store from "../store";
 import { connect } from "react-redux";
 import PlayerAddSelectDisplay from "../Components/PlayerAddSelectDisplay";
+import {selectPlayers} from '../actions/gameactions';
 
 const NEW_INNING_VIEW = "NEW_INNING_VIEW";
 const INNING_IN_PLAY_VIEW = "INNING_IN_PLAY_VIEW";
 
 var stateObject = {
-  currentPitcher: {}, // ALGOLIA OBJECT - ["playerFirstName", "playerLastName", "isPitcher", "playerAge"]
   homeTeam: {},
   awayTeam: {},
-  currentBatter: "Bilbo Ballguns",
-  currentBatterID: 834867640, // ALGOLIA ID ... HAVEN'T IMPLEMENTED SELECTING A BATTER YET
   currentInning: 1,
   pitchesThisInning: [], // array of all pitch objects just for the inning
   pitchInQueue: {}, // single pitch object that can be modified
@@ -31,36 +29,13 @@ class RecordInningView extends Component {
     super(props, context);
     this.endInning = this.endAtBat.bind(this);
     this.state = stateObject;
-    // this.modifyPitch = this.modifyPitch.bind(this)
+
     this.addNewPitch = this.addNewPitch.bind(this);
-    // this.handleSelectPitcher = this.handleSelectPitcher.bind(this);
 
-    // this.handleSelectPitcher(this.props);
   }
 
-  componentWillMount() {
- 
-  }
+  componentWillMount() {}
 
-  // handleSelectPitcher(props) {
-  //   // THIS METHOD IS CALLED AFTER SELECTING TEAM AND PLAYER IS COMPLETE IN PITCHER DISPLAY
-  //   this.setState({
-  //     currentPitcher: props.currentPlayer,
-  //     currentTeamID: props.currentTeamID,
-  //     currentTeamName: props.currentTeamName
-  //   });
-
-  //   // OBJECT IN PROPS (PITCHER DISPLAY STATE OBJECT)
-  //   // {
-  //   // showAddPlayer: false,
-  //   // viewState: "PlayerAddSelectDisplay",
-  //   // teams: [],
-  //   // players: [],
-  //   // currentTeamID: 0,
-  //   // currentTeamName: "",
-  //   // currentPlayer: {}
-  //   //  }
-  // }
 
   addNewPitch(e) {
     e.preventDefault();
@@ -186,6 +161,26 @@ class RecordInningView extends Component {
       return _.filter(this.state.pitchesThisInning, { pitchResult: "ball" })
         .length;
   }
+  
+  setPitcherState = ( prop ) => {
+    store.dispatch(
+      selectPlayers(
+        prop,
+        this.props.storeState.currentBatter,
+        `Pitcher Changed! New Pitcher: {prop.playerName}`
+      )
+    )
+  }
+
+  setBatterState = ( prop ) => {
+    store.dispatch(
+      selectPlayers(
+        this.props.storeState.currentPitcher,
+        prop,
+        `Batter Changed! New Batter: {prop.playerName}`
+      )
+    )
+  }
 
   /**
     * 
@@ -212,13 +207,14 @@ class RecordInningView extends Component {
       <div className="auto cell grid-y grid-x fluid">
         <div id="jsxPitcherName" className="grid-x cell text-center">
           <span className="cell small-12 medium-12 large-12 font-italic">
-            Inning: 1 Outs:1
+            Inning: 1 Outs:2
           </span>
           <span className="cell pitcher-row">
-            Pitcher:{" "}
             <PlayerAddSelectDisplay
+              playerType={"Pitcher"}
               player={this.props.storeState.currentPitcher}
               team={this.props.storeState[this.props.storeState.teamInField]}
+              selectPlayer={this.setPitcherState}
             />
           </span>
         </div>
@@ -243,8 +239,10 @@ class RecordInningView extends Component {
 
         <div className="cell text-center batter-row">
           <PlayerAddSelectDisplay
+            playerType={"Batter"}
             player={this.props.storeState.currentBatter}
             team={this.props.storeState[this.props.storeState.teamAtBat]}
+            selectPlayer={this.setBatterState}
           />
         </div>
         <AtBatResult endAtBat={this.endAtBat} />
